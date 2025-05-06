@@ -1,0 +1,15 @@
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.csproj.AssemblyReference.cache
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.GeneratedMSBuildEditorConfig.editorconfig
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.AssemblyInfoInputs.cache
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.AssemblyInfo.cs
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.csproj.CoreCompileInputs.cache
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\bin\Debug\net8.0\ClinicManagementSystem.BLL.deps.json
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\bin\Debug\net8.0\ClinicManagementSystem.BLL.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\bin\Debug\net8.0\ClinicManagementSystem.BLL.pdb
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\bin\Debug\net8.0\ClinicManagementSystem.DAL.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\bin\Debug\net8.0\ClinicManagementSystem.DAL.pdb
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicMa.11364012.Up2Date
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\refint\ClinicManagementSystem.BLL.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.pdb
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ref\ClinicManagementSystem.BLL.dll
