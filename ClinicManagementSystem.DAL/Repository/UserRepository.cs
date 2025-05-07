@@ -1,4 +1,5 @@
-﻿using ClinicManagementSystem.DAL.Models;
+﻿using ClinicManagementSystem.DAL.Database;
+using ClinicManagementSystem.DAL.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -11,53 +12,50 @@ namespace ClinicManagementSystem.DAL.Repository
 {
     public class UserRepository : IUserRepository
     {
-        private UserManager<ApplicationUser> _userManager;
+        private ProgramContext _context;
 
-        public UserRepository(UserManager<ApplicationUser> userManager ) {
-            _userManager = userManager;
-        }
-        
-        public async Task<string> AddAsync(string password , ApplicationUser user)
+        public UserRepository(ProgramContext context)
         {
-            var done = await _userManager.CreateAsync(user , password);
-            if (done.Succeeded)
-            {
-                return "done";
-            }
-
-            return null;
+            _context = context;
         }
 
-        public async Task<string> CheckPassword(string password , ApplicationUser user)
+        public async Task<string> AddAsync(ApplicationUser user)
         {
-            var check = await _userManager.CheckPasswordAsync(user , password);
             
-            if (check != null)
+            await _context.ApplicationUsers.AddAsync(user);
+            var done = await _context.SaveChangesAsync();
+            
+            if (done > 0)
             {
                 return "done";
             }
 
             return null;
         }
+
 
         public async Task<string> DeleteAsync(ApplicationUser user)
         {
-            var done = await _userManager.DeleteAsync(user);
-            if (done.Succeeded)
+            _context.ApplicationUsers.Remove(user);
+            
+            var done =  await _context.SaveChangesAsync();
+            
+            if (done > 0)
             {
                 return "done";
             }
             return null;
         }
 
-        public async Task<IQueryable<ApplicationUser>> GetAllAsync()
+        public IQueryable<ApplicationUser> GetAll()
         {
-            return await Task.FromResult(_userManager.Users);
+            return _context.ApplicationUsers;
         }
 
-        public async Task<ApplicationUser> GetByEmail(string email)
+        public ApplicationUser GetByEmail(string email)
         {
-            var found = await _userManager.FindByEmailAsync(email);
+            var found = _context.ApplicationUsers.Where(a=>a.email == email).FirstOrDefault();
+            
             if (found != null)
             {
                 return found;
@@ -65,9 +63,10 @@ namespace ClinicManagementSystem.DAL.Repository
             return null;
         }
 
-        public async Task<ApplicationUser?> GetByIdAsync(string userId)
+        public ApplicationUser GetById(int userId)
         {
-            var found = await _userManager.FindByIdAsync(userId);
+            var found = _context.ApplicationUsers.Find(userId);
+
             if (found != null)
             {
                 return found;
@@ -75,32 +74,37 @@ namespace ClinicManagementSystem.DAL.Repository
             return null;
         }
 
-        public async Task<string> GetByUserName(string userName)
+        public ApplicationUser GetByUserName(string username)
         {
-            var found = await _userManager.FindByNameAsync(userName);
+            var found = _context.ApplicationUsers.Where(a=>a.userName == username).FirstOrDefault();
+           
             if (found != null)
             {
-                return "done";
+                return found;
             }
             return null;
         }
 
-        public async Task<IList<Claim>> GetClaims(ApplicationUser user)
+        public byte[] GetPassword(string email)
         {
-            var found = await _userManager.GetClaimsAsync(user);
-
+            var found = _context.ApplicationUsers.Where(a => a.email == email).Select(a => a.password).FirstOrDefault();
             if (found != null)
             {
                 return found;
             }
 
-            return null;
+            else
+            {
+                return null;
+            }
         }
 
         public async Task<string> UpdateAsync(ApplicationUser user)
         {
-            var done = await _userManager.UpdateAsync(user);
-            if (done.Succeeded)
+            _context.Update(user);
+            var done = await _context.SaveChangesAsync();
+            
+            if (done > 0) 
             {
                 return "done";
             }

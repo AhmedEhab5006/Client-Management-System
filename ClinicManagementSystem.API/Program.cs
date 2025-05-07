@@ -24,24 +24,12 @@ internal class Program
 
         builder.Services.AddScoped<IAuthManager, AuthManager>();
         builder.Services.AddScoped<IUserRepository , UserRepository>();
-        builder.Services.AddScoped<IApplicationUserRoleRepository, ApplicationUserRoleRepository>();
-        builder.Services.AddScoped<RoleManager<ApplicationUserRole>>();
-
+        
 
         builder.Services.AddDbContext<ProgramContext>(option =>
 
              option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-        builder.Services.AddIdentity<ApplicationUser, ApplicationUserRole>
-           (options =>
-           {
-               options.Password.RequireDigit = false;
-               options.Password.RequiredLength = 5;
-               options.Password.RequireNonAlphanumeric = false;
-               options.Password.RequireUppercase = false;
-               options.Password.RequireLowercase = false;
-           })
-                .AddEntityFrameworkStores<ProgramContext>();
 
         builder.Services.AddAuthentication(option =>
         {

@@ -9,9 +9,9 @@ namespace ClinicManagementSystem.BLL.Dto_s
 {
     public class LoginDto
     {
-        [Required]
+        [Required(ErrorMessage = "Email is required")]
         public string email {  get; set; }
-        [Required]
+        [Required(ErrorMessage = "Password is required")]
         public string password { get; set; }
     }
 }

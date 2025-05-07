@@ -11,14 +11,13 @@ namespace ClinicManagementSystem.DAL.Repository
 {
     public interface IUserRepository
     {
-        public Task<ApplicationUser?> GetByIdAsync(string userId);
+        public ApplicationUser GetById (int userId);
         public Task<string> UpdateAsync(ApplicationUser user);
         public Task<string> DeleteAsync(ApplicationUser user);
-        public Task <string> AddAsync(string password , ApplicationUser user);
-        public Task <IQueryable<ApplicationUser>> GetAllAsync();
-        public Task <string> GetByUserName (string userName);
-        public Task<ApplicationUser> GetByEmail(string email);
-        public Task<string> CheckPassword (string password  , ApplicationUser user);
-        public Task<IList<Claim>> GetClaims (ApplicationUser user);   
+        public Task <string> AddAsync(ApplicationUser user);
+        public IQueryable<ApplicationUser> GetAll();
+        public ApplicationUser GetByUserName (string userName);
+        public ApplicationUser GetByEmail(string email);
+        public byte[] GetPassword (string email);
     }
 }

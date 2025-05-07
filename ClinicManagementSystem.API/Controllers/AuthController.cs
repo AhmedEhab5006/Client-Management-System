@@ -37,10 +37,15 @@ namespace ClinicManagementSystem.API.Controllers
         [HttpPost("Login")]
         public async Task <IActionResult> Login (LoginDto loginDto)
         {
-            var logged = _authManager.Login(loginDto);
-            if (logged == null)
+            var logged = await _authManager.Login(loginDto);
+            if (logged == "Email not found")
             {
-                return NotFound("Wrong email or password");
+                return BadRequest("Wrong Email");
+            }
+
+            if (logged == "Wrong Password")
+            {
+                return BadRequest("Wrong Password");
             }
 
             return Ok(logged);

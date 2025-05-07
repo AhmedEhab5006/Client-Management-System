@@ -6,14 +6,15 @@ using System.Threading.Tasks;
 
 namespace ClinicManagementSystem.DAL.Models
 {
-    public class Patient : ApplicationUser
+    public class Patient
     {
-        public string bookedAppointment { get; set; }
-        public Guid doctorId { get; set; }
+        public int userId { get; set; }
+        public ApplicationUser? user { get; set; }
+        public Reservation? appointment { get; set; }
+        public int? doctorId { get; set; }
         public Doctor? doctor { get; set; }
-        public int appointmentId { get; set; }
-        public Appointment? appointment { get; set; }
         public ICollection<MedicalHistory>? medicalHistory { get; set; }
-        public bool isDeleted { get; set; }
+
+
     }
 }

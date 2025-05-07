@@ -9,11 +9,10 @@ namespace ClinicManagementSystem.DAL.Models
     public class MedicalHistory
     {
         public int id {  get; set; }
-        public Guid patientId { get; set; }
+        public int patientId { get; set; }
         public Patient? patient { get; set; }
         public string describtion { get; set; }
-        public Guid doctorId { get; set; }
+        public int doctorId { get; set; }
         public Doctor? doctor { get; set; }
-        public bool isDeleted {  get; set; }
     }
 }

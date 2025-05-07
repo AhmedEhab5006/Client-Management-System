@@ -24,124 +24,90 @@ namespace ClinicManagementSystem.DAL.Migrations
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.ApplicationUser", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
-
-                    b.UseTptMappingStrategy();
-                });
-
-            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.ApplicationUserRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
-
-            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Appointment", b =>
-                {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
-                    b.Property<DateTime>("date")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("doctorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<string>("firstName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
+                    b.Property<string>("lastName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("patientId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<byte[]>("password")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("phoneNumber")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("role")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("nvarchar(max)")
+                        .HasDefaultValue("Patient");
+
+                    b.Property<string>("userName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("id");
 
-                    b.ToTable("Appointments");
+                    b.ToTable("ApplicationUsers");
+                });
+
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
+                {
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("location")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("major")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("userId");
+
+                    b.ToTable("Doctors");
+                });
+
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.DoctorAppointment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateOnly>("date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("doctorId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("status")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<TimeSpan>("timeSlot")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("doctorId");
+
+                    b.ToTable("DoctorAppointments");
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.MedicalHistory", b =>
@@ -156,338 +122,142 @@ namespace ClinicManagementSystem.DAL.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("doctorId")
-                        .HasColumnType("uniqueidentifier");
+                    b.Property<int>("doctorId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("doctorId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<bool>("isDeleted")
-                        .HasColumnType("bit");
-
-                    b.Property<Guid>("patientId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("patientId1")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("patientId")
+                        .HasColumnType("int");
 
                     b.HasKey("id");
 
-                    b.HasIndex("doctorId1");
+                    b.HasIndex("doctorId");
 
-                    b.HasIndex("patientId1");
+                    b.HasIndex("patientId");
 
                     b.ToTable("MedicalHistories");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Patient", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<int>("userId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int?>("doctorId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("userId");
 
-                    b.Property<string>("NormalizedName")
-                        .HasColumnType("nvarchar(max)");
+                    b.HasIndex("doctorId");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("IdentityRole");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = "cf9144ea-0ff7-48f1-9015-f346717e490c",
-                            Name = "Administrator",
-                            NormalizedName = "ADMINISTRATOR"
-                        },
-                        new
-                        {
-                            Id = "2a7db4bc-3551-4892-a526-9e4fd7c288bc",
-                            Name = "Client",
-                            NormalizedName = "CLIENT"
-                        },
-                        new
-                        {
-                            Id = "285c1f97-cfdf-44f2-81a3-c84ae8ec2ee2",
-                            Name = "Doctor",
-                            NormalizedName = "DOCTOR"
-                        });
+                    b.ToTable("Patients");
                 });
 
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Reservation", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("RoleId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetRoleClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("ClaimType")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ClaimValue")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserClaims", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderKey")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ProviderDisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("LoginProvider", "ProviderKey");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("AspNetUserLogins", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("UserId", "RoleId");
-
-                    b.HasIndex("RoleId");
-
-                    b.ToTable("AspNetUserRoles", (string)null);
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("LoginProvider")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("UserId", "LoginProvider", "Name");
-
-                    b.ToTable("AspNetUserTokens", (string)null);
-                });
-
-            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
-                {
-                    b.HasBaseType("ClinicManagementSystem.DAL.Models.ApplicationUser");
-
-                    b.Property<DateOnly?>("appointmentDate")
-                        .HasColumnType("date");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<int>("appointmentId")
                         .HasColumnType("int");
 
-                    b.Property<bool>("firstTimeSlot")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("secondTimeSlot")
-                        .HasColumnType("bit");
+                    b.Property<int>("patientId")
+                        .HasColumnType("int");
 
                     b.Property<string>("status")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<bool>("thirdTimeSlot")
-                        .HasColumnType("bit");
+                    b.HasKey("id");
 
-                    b.HasIndex("appointmentId")
-                        .IsUnique()
-                        .HasFilter("[appointmentId] IS NOT NULL");
+                    b.HasIndex("appointmentId");
 
-                    b.ToTable("Doctors", (string)null);
+                    b.HasIndex("patientId")
+                        .IsUnique();
+
+                    b.ToTable("Reservations");
                 });
 
-            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Patient", b =>
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
                 {
-                    b.HasBaseType("ClinicManagementSystem.DAL.Models.ApplicationUser");
+                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", "user")
+                        .WithOne("doctor")
+                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Doctor", "userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<int>("appointmentId")
-                        .HasColumnType("int");
+                    b.Navigation("user");
+                });
 
-                    b.Property<string>("bookedAppointment")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.DoctorAppointment", b =>
+                {
+                    b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
+                        .WithMany("appointments")
+                        .HasForeignKey("doctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Property<Guid>("doctorId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("doctorId1")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("appointmentId")
-                        .IsUnique()
-                        .HasFilter("[appointmentId] IS NOT NULL");
-
-                    b.HasIndex("doctorId1");
-
-                    b.ToTable("Patients");
+                    b.Navigation("doctor");
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.MedicalHistory", b =>
                 {
                     b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
                         .WithMany()
-                        .HasForeignKey("doctorId1");
+                        .HasForeignKey("doctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("ClinicManagementSystem.DAL.Models.Patient", "patient")
                         .WithMany("medicalHistory")
-                        .HasForeignKey("patientId1");
+                        .HasForeignKey("patientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("doctor");
 
                     b.Navigation("patient");
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
-                {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUserRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
-                {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
-                {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
-                {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUserRole", null)
-                        .WithMany()
-                        .HasForeignKey("RoleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
-                {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", null)
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
-                {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", null)
-                        .WithOne()
-                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Doctor", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicManagementSystem.DAL.Models.Appointment", "appointment")
-                        .WithOne("doctor")
-                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Doctor", "appointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("appointment");
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Patient", b =>
                 {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", null)
-                        .WithOne()
-                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Patient", "Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ClinicManagementSystem.DAL.Models.Appointment", "appointment")
-                        .WithOne("patient")
-                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Patient", "appointmentId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
                         .WithMany("patients")
-                        .HasForeignKey("doctorId1");
+                        .HasForeignKey("doctorId");
+
+                    b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", "user")
+                        .WithOne("patient")
+                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Patient", "userId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("doctor");
+
+                    b.Navigation("user");
+                });
+
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Reservation", b =>
+                {
+                    b.HasOne("ClinicManagementSystem.DAL.Models.DoctorAppointment", "appointment")
+                        .WithMany()
+                        .HasForeignKey("appointmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ClinicManagementSystem.DAL.Models.Patient", "patient")
+                        .WithOne("appointment")
+                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Reservation", "patientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
 
                     b.Navigation("appointment");
 
-                    b.Navigation("doctor");
+                    b.Navigation("patient");
                 });
 
-            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Appointment", b =>
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.ApplicationUser", b =>
                 {
                     b.Navigation("doctor");
 
@@ -496,11 +266,15 @@ namespace ClinicManagementSystem.DAL.Migrations
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
                 {
+                    b.Navigation("appointments");
+
                     b.Navigation("patients");
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Patient", b =>
                 {
+                    b.Navigation("appointment");
+
                     b.Navigation("medicalHistory");
                 });
 #pragma warning restore 612, 618

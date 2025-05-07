@@ -12,3 +12,4 @@ D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.pdb
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.genruntimeconfig.cache
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\obj\Debug\net8.0\ref\ClinicManagementSystem.DAL.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.sourcelink.json

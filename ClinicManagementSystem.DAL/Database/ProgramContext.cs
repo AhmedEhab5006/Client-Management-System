@@ -5,40 +5,64 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace ClinicManagementSystem.DAL.Database
 {
-    public class ProgramContext : IdentityDbContext<ApplicationUser, ApplicationUserRole, string>
-    {
+    public class ProgramContext : DbContext  {
         
     public ProgramContext(DbContextOptions<ProgramContext> options)
         : base(options) { }
 
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-
         protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
+        {    // Doctor ↔ ApplicationUser (One-to-One)
 
-            // Configure TPT
-            builder.Entity<Doctor>().ToTable("Patients");
-            builder.Entity<Doctor>().ToTable("Doctors");
+            builder.Entity<ApplicationUser>()
+                .Property(u => u.role)
+                 .HasDefaultValue("Patient");
 
-            // Optional: map base table name
-            builder.Entity<ApplicationUser>().ToTable("AspNetUsers");
 
-            builder.Entity<ApplicationUserRole>().HasData(
-            new IdentityRole { Name = "Administrator", NormalizedName = "ADMINISTRATOR" },
-            new IdentityRole { Name = "Patient", NormalizedName = "PATIENT" },
-            new IdentityRole { Name = "Doctor", NormalizedName = "DOCTOR" }
-        );
+            builder.Entity<Doctor>()
+                .HasKey(p => p.userId);
+
+            builder.Entity<Doctor>()
+                .HasOne(p => p.user)
+                .WithOne(u => u.doctor)
+                .HasForeignKey<Doctor>(p => p.userId);
+
+            // Patient ↔ ApplicationUser (One-to-One)
+            builder.Entity<Patient>()
+                .HasKey(p => p.userId);
+
+            builder.Entity<Patient>()
+                .HasOne(p => p.user)
+                .WithOne(u => u.patient)
+                .HasForeignKey<Patient>(p => p.userId);
+
+            // Patient ↔ MedicalHistory (One-to-Many with Cascade Delete)
+            builder.Entity<Patient>()
+                .HasMany(p => p.medicalHistory)
+                .WithOne(m => m.patient)
+                .HasForeignKey(m => m.patientId)
+                .OnDelete(DeleteBehavior.Restrict); // Keep cascade here
+
+            // Patient ↔ Reservation (One-to-Many with Restrict to avoid cascade conflict)
+            builder.Entity<Patient>()
+                .HasOne(r => r.appointment)
+                .WithOne(p => p.patient)
+                .HasForeignKey<Reservation>(r => r.patientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
         }
 
-        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<DoctorAppointment> DoctorAppointments { get; set; }
         public DbSet<MedicalHistory> MedicalHistories { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
+        public DbSet<Reservation> Reservations { get; set; }
     }
 
 }

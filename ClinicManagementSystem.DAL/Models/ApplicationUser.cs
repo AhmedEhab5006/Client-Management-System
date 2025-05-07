@@ -7,8 +7,18 @@ using System.Threading.Tasks;
 
 namespace ClinicManagementSystem.DAL.Models
 {
-    public class ApplicationUser : IdentityUser
+    public class ApplicationUser
     {
-        public bool isDeleted { get; set; }
+        public int id { get; set; }
+        public string firstName { get; set; }
+        public string lastName { get; set; }
+        public string userName { get; set; }
+        public string email { get; set; }
+        public byte [] password { get; set; }
+        public string role { get; set; }
+        public string phoneNumber { get; set; }
+        public Doctor? doctor { get; set; }
+        public Patient? patient { get; set; }
+
     }
 }

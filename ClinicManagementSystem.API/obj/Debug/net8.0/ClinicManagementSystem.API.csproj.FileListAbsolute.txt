@@ -139,3 +139,17 @@ D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\obj\Debug\net8.0\ClinicManagementSystem.API.pdb
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\obj\Debug\net8.0\ClinicManagementSystem.API.genruntimeconfig.cache
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\obj\Debug\net8.0\ref\ClinicManagementSystem.API.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\obj\Debug\net8.0\ClinicManagementSystem.API.MvcApplicationPartsAssemblyInfo.cs
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\obj\Debug\net8.0\ClinicManagementSystem.API.sourcelink.json
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\AutoMapper.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\Microsoft.Extensions.WebEncoders.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\System.Security.Cryptography.Xml.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\runtimes\win\lib\net8.0\System.Security.Cryptography.Pkcs.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.API\bin\Debug\net8.0\BCrypt.Net-Next.dll

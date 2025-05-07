@@ -13,3 +13,4 @@ D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\refint\ClinicManagementSystem.BLL.dll
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.pdb
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ref\ClinicManagementSystem.BLL.dll
+D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.BLL\obj\Debug\net8.0\ClinicManagementSystem.BLL.sourcelink.json
