@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj": {}
+    "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj": {}
   },
   "projects": {
-    "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj": {
+    "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj",
         "projectName": "ClinicManagementSystem.API",
-        "projectPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.API\\obj\\",
+        "projectPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.API\\ClinicManagementSystem.API.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.API\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -29,8 +33,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj": {
-                "projectPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj"
+              "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj": {
+                "projectPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj"
               }
             }
           }
@@ -84,21 +88,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj": {
+    "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj",
         "projectName": "ClinicManagementSystem.BLL",
-        "projectPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.BLL\\obj\\",
+        "projectPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.BLL\\ClinicManagementSystem.BLL.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.BLL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -113,8 +121,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj": {
-                "projectPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj"
+              "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj": {
+                "projectPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj"
               }
             }
           }
@@ -167,21 +175,25 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj": {
+    "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj",
+        "projectUniqueName": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj",
         "projectName": "ClinicManagementSystem.DAL",
-        "projectPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj",
-        "packagesPath": "C:\\Users\\LENOVO\\.nuget\\packages\\",
-        "outputPath": "D:\\FCAIH\\Faculty's Projects\\IA\\ClinicManagementSystem\\ClinicManagementSystem.DAL\\obj\\",
+        "projectPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.DAL\\ClinicManagementSystem.DAL.csproj",
+        "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\PC\\ClinicProj\\ClinicManagementSystem.DAL\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
-          "C:\\Users\\LENOVO\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -252,7 +264,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.403/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

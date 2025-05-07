@@ -13,3 +13,18 @@ D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.genruntimeconfig.cache
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\obj\Debug\net8.0\ref\ClinicManagementSystem.DAL.dll
 D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.sourcelink.json
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\bin\Debug\net8.0\ClinicManagementSystem.DAL.deps.json
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\bin\Debug\net8.0\ClinicManagementSystem.DAL.runtimeconfig.json
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\bin\Debug\net8.0\ClinicManagementSystem.DAL.dll
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\bin\Debug\net8.0\ClinicManagementSystem.DAL.pdb
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.csproj.AssemblyReference.cache
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.AssemblyInfoInputs.cache
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.AssemblyInfo.cs
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.csproj.CoreCompileInputs.cache
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.sourcelink.json
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.dll
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\refint\ClinicManagementSystem.DAL.dll
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.pdb
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ClinicManagementSystem.DAL.genruntimeconfig.cache
+C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\obj\Debug\net8.0\ref\ClinicManagementSystem.DAL.dll

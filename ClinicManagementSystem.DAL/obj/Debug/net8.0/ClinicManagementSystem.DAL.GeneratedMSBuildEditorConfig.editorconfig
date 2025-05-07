@@ -8,6 +8,6 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ClinicManagementSystem.DAL
-build_property.ProjectDir = D:\FCAIH\Faculty's Projects\IA\ClinicManagementSystem\ClinicManagementSystem.DAL\
+build_property.ProjectDir = C:\Users\PC\ClinicProj\ClinicManagementSystem.DAL\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
