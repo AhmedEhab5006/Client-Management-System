@@ -67,6 +67,11 @@ namespace ClinicManagementSystem.DAL.Database
                 .HasForeignKey<Reservation>(r => r.patientId)
                 .OnDelete(DeleteBehavior.Restrict);
 
+
+            builder.Entity<DoctorAppointment>()
+                .Property(p => p.duration)
+                .HasDefaultValue(new TimeSpan(2, 0, 0));
+
         }
 
         public DbSet<DoctorAppointment> DoctorAppointments { get; set; }
