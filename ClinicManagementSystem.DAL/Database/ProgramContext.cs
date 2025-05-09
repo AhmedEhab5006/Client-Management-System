@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,20 @@ using System.Threading.Tasks;
 namespace ClinicManagementSystem.DAL.Database
 {
     public class ProgramContext : DbContext  {
-        
-    public ProgramContext(DbContextOptions<ProgramContext> options)
-        : base(options) { }
+        private readonly IConfiguration _config;
+        public ProgramContext(IConfiguration config) 
+        {
+            _config = config;
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseSqlServer(_config.GetConnectionString("DefaultConnection"),
+                    optionsBuilder => optionsBuilder.EnableRetryOnFailure());
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {    // Doctor ↔ ApplicationUser (One-to-One)
@@ -54,6 +66,11 @@ namespace ClinicManagementSystem.DAL.Database
                 .WithOne(p => p.patient)
                 .HasForeignKey<Reservation>(r => r.patientId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            builder.Entity<DoctorAppointment>()
+                .Property(p => p.duration)
+                .HasDefaultValue(new TimeSpan(2, 0, 0));
 
         }
 
