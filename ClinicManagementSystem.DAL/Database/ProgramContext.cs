@@ -29,7 +29,24 @@ namespace ClinicManagementSystem.DAL.Database
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
-        {    // Doctor ↔ ApplicationUser (One-to-One)
+        {
+
+            string hashedPassword = BCrypt.Net.BCrypt.HashPassword("admin");
+            byte[] passwordBytes = Encoding.UTF8.GetBytes(hashedPassword);
+            var adminUser = new ApplicationUser
+            {
+                
+                id = 1,
+                firstName = "Admin",
+                lastName = "1",
+                userName = "admin",
+                email = "admin@gmail.com",
+                role = "Admin",
+                phoneNumber = "1234567890",
+                password = passwordBytes
+            };
+
+            builder.Entity<ApplicationUser>().HasData(adminUser);
 
             builder.Entity<ApplicationUser>()
                 .Property(u => u.role)

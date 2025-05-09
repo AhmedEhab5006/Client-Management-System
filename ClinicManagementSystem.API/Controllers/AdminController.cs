@@ -1,6 +1,8 @@
 ﻿using ClinicManagementSystem.BLL.Dto_s.AdminDTO;
+using ClinicManagementSystem.BLL.Managers;
 using ClinicManagementSystem.DAL.Database;
 using ClinicManagementSystem.DAL.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Resources;
 
@@ -8,13 +10,17 @@ namespace ClinicManagementSystem.API.Controllers
 {
     [ApiController]
     [Route("[Controller]")]
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
 
         private readonly ProgramContext _context;
-        public AdminController(IConfiguration config)
+        private readonly IPasswordHandlerManager _passwordHandlerManager;
+
+        public AdminController(IConfiguration config , IPasswordHandlerManager passwordHandlerManager)
         {
             _context = new(config);
+            _passwordHandlerManager = passwordHandlerManager;
         }
 
 
@@ -28,7 +34,7 @@ namespace ClinicManagementSystem.API.Controllers
             user.lastName = AddDoc.lastName;
             user.userName = AddDoc.userName;
             user.email = AddDoc.email;
-            user.password = AddDoc.password;
+            user.password = _passwordHandlerManager.HashPasswordToByteArray(AddDoc.password);
             user.phoneNumber = AddDoc.phoneNumber;
             user.role = "Doctor";
             var check = _context.ApplicationUsers.Where(e => e.email == AddDoc.email).ToList();
@@ -56,7 +62,7 @@ namespace ClinicManagementSystem.API.Controllers
         public IEnumerable<GetDocsDTO> GetDocs()
         {
             List<GetDocsDTO> docDTO = new();
-            var docUsers = _context.ApplicationUsers.ToList();
+            var docUsers = _context.ApplicationUsers.Where(a=>a.role == "Doctor").ToList();
             var docProp = _context.Doctors.ToList();
             for (int i = 0; i < docUsers.Count; i++)
             {
@@ -84,11 +90,12 @@ namespace ClinicManagementSystem.API.Controllers
             var docProp = _context.Doctors.Where(i => i.userId == id).FirstOrDefault();
             if (DocUser != null)
             {
+                var newPassword = _passwordHandlerManager.HashPasswordToByteArray(editDoc.password);
                 editDoc.firstName = DocUser.firstName;
                 editDoc.lastName = DocUser.lastName;
                 editDoc.userName = DocUser.userName;
                 editDoc.email = DocUser.email;
-                editDoc.password = DocUser.password;
+                newPassword = DocUser.password;
                 editDoc.phoneNumber = DocUser.phoneNumber;
                 editDoc.major = docProp.major;
                 editDoc.location = docProp.location;

@@ -11,6 +11,7 @@ namespace ClinicManagementSystem.DAL.Models
         public int id {  get; set; }
         public int patientId { get; set; }
         public Patient? patient { get; set; }
+        public string note { get; set; }
         public string describtion { get; set; }
         public int doctorId { get; set; }
         public Doctor? doctor { get; set; }

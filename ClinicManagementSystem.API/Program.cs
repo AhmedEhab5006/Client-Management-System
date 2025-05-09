@@ -1,4 +1,6 @@
-﻿using ClinicManagementSystem.BLL.Managers.AuthManagers;
+﻿using ClinicManagementSystem.BLL.Helpers;
+using ClinicManagementSystem.BLL.Managers;
+using ClinicManagementSystem.BLL.Managers.AuthManagers;
 using ClinicManagementSystem.DAL.Database;
 using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.DAL.Repository;
@@ -7,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 
 internal class Program
@@ -24,11 +27,19 @@ internal class Program
 
         builder.Services.AddScoped<IAuthManager, AuthManager>();
         builder.Services.AddScoped<IUserRepository , UserRepository>();
+        builder.Services.AddScoped<IPasswordHandlerManager ,  PasswordHandlerManager>();
+        builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+        builder.Services.AddScoped<IDoctorManager, DoctorManager>();
+        builder.Services.AddScoped<IGetLoggedData, GetLoggedData>();
+        builder.Services.AddScoped<IAppointmentRepository , AppointmentRepository>();
+        builder.Services.AddScoped<IMedicalHistoryRepository, MedicalHistoryRepository>();
+        builder.Services.AddHttpContextAccessor();
         
 
         builder.Services.AddDbContext<ProgramContext>(option =>
 
              option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 
 
         builder.Services.AddAuthentication(option =>
@@ -86,6 +97,9 @@ internal class Program
         });
 
         var app = builder.Build();
+
+
+
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())

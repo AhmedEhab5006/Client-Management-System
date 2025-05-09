@@ -16,5 +16,6 @@ namespace ClinicManagementSystem.DAL.Models
         public ICollection<MedicalHistory>? medicalHistory { get; set; }
 
 
+
     }
 }

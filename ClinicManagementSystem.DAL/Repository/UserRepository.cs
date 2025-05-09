@@ -19,7 +19,7 @@ namespace ClinicManagementSystem.DAL.Repository
             _context = context;
         }
 
-        public async Task<string> AddAsync(ApplicationUser user)
+        public async Task<int> AddAsync(ApplicationUser user)
         {
             
             await _context.ApplicationUsers.AddAsync(user);
@@ -27,10 +27,10 @@ namespace ClinicManagementSystem.DAL.Repository
             
             if (done > 0)
             {
-                return "done";
+                return user.id;
             }
 
-            return null;
+            return 0;
         }
 
 

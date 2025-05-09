@@ -20,11 +20,13 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
     {
         private IUserRepository _userRepository;
         private IConfiguration _configuration;
+        private IPatientRepository _patientRepostiory;
 
-        public AuthManager(IUserRepository userRepository , IConfiguration configuration)
+        public AuthManager(IUserRepository userRepository , IConfiguration configuration , IPatientRepository patientRepository)
         {
             _userRepository = userRepository;
             _configuration = configuration;
+            _patientRepostiory = patientRepository;
         }
 
         public string GenerateToken(IList<Claim> claims)
@@ -91,8 +93,12 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
             addedUser.password = HashPasswordToByteArray(registerDto.password);
 
             var addingResult = await _userRepository.AddAsync(addedUser);
+            _patientRepostiory.AddPatient(new Patient
+            {
+                userId = addingResult
+            });
 
-            if (addingResult == "done")
+            if (addingResult != 0)
             {
                 List<Claim> claims = new List<Claim>();
                 claims.Add(new Claim("UserName", registerDto.username));

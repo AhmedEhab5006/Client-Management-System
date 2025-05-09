@@ -14,7 +14,7 @@ namespace ClinicManagementSystem.DAL.Repository
         public ApplicationUser GetById (int userId);
         public Task<string> UpdateAsync(ApplicationUser user);
         public Task<string> DeleteAsync(ApplicationUser user);
-        public Task <string> AddAsync(ApplicationUser user);
+        public Task <int> AddAsync(ApplicationUser user);
         public IQueryable<ApplicationUser> GetAll();
         public ApplicationUser GetByUserName (string userName);
         public ApplicationUser GetByEmail(string email);
