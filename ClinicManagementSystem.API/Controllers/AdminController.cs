@@ -178,10 +178,11 @@ namespace ClinicManagementSystem.API.Controllers
             {
                 reservation.status = "Reserved";
                 Patient patient = new();
+                patient = _context.Patients.Where(a => a.userId == reservation.patientId).FirstOrDefault();
                 var getDoc = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault();
-                patient.userId = reservation.patientId;
+                //patient.userId = reservation.patientId;
                 patient.doctorId = getDoc.doctorId;
-                _context.Patients.Add(patient);
+                _context.Patients.Update(patient);
                 if (_context.SaveChanges() > 0)
                     return Ok();
                 throw new Exception("Could not confirm Reservation");

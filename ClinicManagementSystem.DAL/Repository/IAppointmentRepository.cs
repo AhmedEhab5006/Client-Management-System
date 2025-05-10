@@ -10,6 +10,7 @@ namespace ClinicManagementSystem.DAL.Repository
     public interface IAppointmentRepository
     {
         public IQueryable<DoctorAppointment> Get(int doctorId);
+        public DoctorAppointment GetById(int id);
 
     }
 }

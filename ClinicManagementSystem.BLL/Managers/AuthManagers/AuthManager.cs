@@ -62,7 +62,7 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
                 claims.Add(new Claim(ClaimTypes.Role, logged.role));
 
                 var token = GenerateToken(claims);
-
+               
                 return token;
             }
 

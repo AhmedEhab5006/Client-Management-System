@@ -12,7 +12,7 @@ namespace ClinicManagementSystem.BLL.Managers
     {
         public IEnumerable<PatientReadDto> GetPatients(int docId);
         public IEnumerable<AppointmentReadDto> GetAppointments(int docId);
-        public IEnumerable<MedicalHistoryReadDto> GetFullMedicalHistory(int patientId);
+        public IEnumerable<MedicalHistoryGetDto> GetFullMedicalHistory(int patientId);
         public bool AddMedicalHistory (MedicalHistoryAddDto addDto);
         
     }
