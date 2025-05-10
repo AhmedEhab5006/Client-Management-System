@@ -70,3 +70,8 @@
 /ClinicManagementSystem.API/obj/project.nuget.cache
 /ClinicManagementSystem.API/ClinicManagementSystem.API.csproj.user
 /ClinicManagementSystem.API/obj/Debug/net8.0/ref/ClinicManagementSystem.API.dll
+/.vs/ProjectEvaluation/clinicmanagementsystem.metadata.v9.bin
+/.vs/ProjectEvaluation/clinicmanagementsystem.projects.v9.bin
+/.vs/ProjectEvaluation/clinicmanagementsystem.strings.v9.bin
+/ClinicManagementSystem.BLL/obj/Debug/net8.0/ClinicManagementSystem.BLL.AssemblyInfo.cs
+/ClinicManagementSystem.BLL/obj/Debug/net8.0/ClinicManagementSystem.BLL.AssemblyInfoInputs.cache
