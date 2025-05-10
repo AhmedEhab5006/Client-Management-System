@@ -62,7 +62,7 @@ namespace ClinicManagementSystem.DAL.Migrations
 
                     b.HasKey("id");
 
-                    b.ToTable("ApplicationUsers");
+                    b.ToTable("ApplicationUsers", (string)null);
 
                     b.HasData(
                         new
@@ -93,7 +93,7 @@ namespace ClinicManagementSystem.DAL.Migrations
 
                     b.HasKey("userId");
 
-                    b.ToTable("Doctors");
+                    b.ToTable("Doctors", (string)null);
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.DoctorAppointment", b =>
@@ -128,7 +128,7 @@ namespace ClinicManagementSystem.DAL.Migrations
 
                     b.HasIndex("doctorId");
 
-                    b.ToTable("DoctorAppointments");
+                    b.ToTable("DoctorAppointments", (string)null);
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.MedicalHistory", b =>
@@ -159,7 +159,7 @@ namespace ClinicManagementSystem.DAL.Migrations
 
                     b.HasIndex("patientId");
 
-                    b.ToTable("MedicalHistories");
+                    b.ToTable("MedicalHistories", (string)null);
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Patient", b =>
@@ -174,7 +174,7 @@ namespace ClinicManagementSystem.DAL.Migrations
 
                     b.HasIndex("doctorId");
 
-                    b.ToTable("Patients");
+                    b.ToTable("Patients", (string)null);
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Reservation", b =>
@@ -202,7 +202,7 @@ namespace ClinicManagementSystem.DAL.Migrations
                     b.HasIndex("patientId")
                         .IsUnique();
 
-                    b.ToTable("Reservations");
+                    b.ToTable("Reservations", (string)null);
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>

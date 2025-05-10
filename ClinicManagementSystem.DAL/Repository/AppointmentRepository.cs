@@ -21,5 +21,10 @@ namespace ClinicManagementSystem.DAL.Repository
             var found = _context.DoctorAppointments.Where(a=>a.doctorId == doctorId);
             return found;
         }
+        public DoctorAppointment GetById(int id)
+        {
+            var found = _context.DoctorAppointments.FirstOrDefault(a => a.Id == id);
+            return found;
+        }
     }
 }

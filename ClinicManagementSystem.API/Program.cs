@@ -33,13 +33,14 @@ internal class Program
         builder.Services.AddScoped<IGetLoggedData, GetLoggedData>();
         builder.Services.AddScoped<IAppointmentRepository , AppointmentRepository>();
         builder.Services.AddScoped<IMedicalHistoryRepository, MedicalHistoryRepository>();
+        builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
+        builder.Services.AddScoped<IPatientManager, PatientManager>();
         builder.Services.AddHttpContextAccessor();
         
 
         builder.Services.AddDbContext<ProgramContext>(option =>
 
              option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
 
 
         builder.Services.AddAuthentication(option =>

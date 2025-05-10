@@ -68,18 +68,18 @@ namespace ClinicManagementSystem.BLL.Managers
             return null;
         }
 
-        public IEnumerable<MedicalHistoryReadDto> GetFullMedicalHistory(int patientId)
+        public IEnumerable<MedicalHistoryGetDto> GetFullMedicalHistory(int patientId)
         {
             var foundModel = _medicalHistoryRepository.GetFullHistory(patientId).ToList();
 
-            if (foundModel.Count() > 0)
+            if (foundModel != null)
             {
-                var found = foundModel.Select(a => new MedicalHistoryReadDto
+                var found = foundModel.Select(a => new MedicalHistoryGetDto
                 {
-                    describtion = a.describtion,
+                    Description = a.describtion,
                     id = a.id,
                     patientId = patientId,
-                    notes = a.note
+                    Note = a.note
                 });
 
                 return found;
