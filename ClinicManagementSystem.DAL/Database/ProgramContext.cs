@@ -61,6 +61,19 @@ namespace ClinicManagementSystem.DAL.Database
                 .WithOne(u => u.doctor)
                 .HasForeignKey<Doctor>(p => p.userId);
 
+            builder.Entity<Doctor>()
+                .HasMany(d => d.patients)
+                .WithOne(p => p.doctor)
+                .HasForeignKey(p => p.doctorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Patient>()
+                .HasOne(a => a.doctor)
+                .WithMany(d => d.patients)
+                .HasForeignKey(a => a.doctorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+
             // Patient ↔ ApplicationUser (One-to-One)
             builder.Entity<Patient>()
                 .HasKey(p => p.userId);

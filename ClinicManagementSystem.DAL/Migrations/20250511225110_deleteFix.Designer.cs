@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicManagementSystem.DAL.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20250508213712_admin")]
-    partial class admin
+    [Migration("20250511225110_deleteFix")]
+    partial class deleteFix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,11 +74,33 @@ namespace ClinicManagementSystem.DAL.Migrations
                             email = "admin@gmail.com",
                             firstName = "Admin",
                             lastName = "1",
-                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 101, 65, 80, 84, 101, 87, 104, 119, 97, 115, 52, 67, 75, 116, 105, 115, 104, 52, 47, 100, 54, 101, 87, 115, 73, 67, 51, 120, 57, 101, 102, 47, 121, 105, 52, 80, 100, 46, 115, 111, 67, 84, 121, 49, 55, 85, 105, 74, 66, 113, 57, 73, 101 },
+                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 82, 110, 46, 109, 83, 57, 90, 47, 79, 76, 71, 57, 49, 89, 67, 68, 85, 56, 105, 90, 81, 101, 114, 107, 73, 82, 121, 106, 109, 117, 85, 102, 116, 113, 107, 80, 70, 55, 89, 108, 70, 83, 84, 70, 69, 49, 57, 65, 116, 122, 104, 110, 83 },
                             phoneNumber = "1234567890",
                             role = "Admin",
                             userName = "admin"
                         });
+                });
+
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.ChatRoom", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("doctorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("doctorId");
+
+                    b.ToTable("ChatRooms");
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
@@ -149,6 +171,10 @@ namespace ClinicManagementSystem.DAL.Migrations
                     b.Property<int>("doctorId")
                         .HasColumnType("int");
 
+                    b.Property<string>("note")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("patientId")
                         .HasColumnType("int");
 
@@ -204,6 +230,17 @@ namespace ClinicManagementSystem.DAL.Migrations
                     b.ToTable("Reservations");
                 });
 
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.ChatRoom", b =>
+                {
+                    b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
+                        .WithMany()
+                        .HasForeignKey("doctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("doctor");
+                });
+
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
                 {
                     b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", "user")
@@ -249,7 +286,8 @@ namespace ClinicManagementSystem.DAL.Migrations
                 {
                     b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
                         .WithMany("patients")
-                        .HasForeignKey("doctorId");
+                        .HasForeignKey("doctorId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", "user")
                         .WithOne("patient")

@@ -71,7 +71,7 @@ namespace ClinicManagementSystem.DAL.Migrations
                             email = "admin@gmail.com",
                             firstName = "Admin",
                             lastName = "1",
-                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 120, 116, 114, 82, 102, 83, 102, 107, 112, 100, 77, 74, 114, 86, 89, 109, 73, 72, 115, 78, 78, 79, 109, 102, 118, 85, 112, 78, 120, 105, 73, 50, 48, 90, 65, 78, 100, 104, 52, 102, 122, 90, 57, 105, 90, 86, 48, 82, 102, 47, 119, 106, 79 },
+                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 82, 110, 46, 109, 83, 57, 90, 47, 79, 76, 71, 57, 49, 89, 67, 68, 85, 56, 105, 90, 81, 101, 114, 107, 73, 82, 121, 106, 109, 117, 85, 102, 116, 113, 107, 80, 70, 55, 89, 108, 70, 83, 84, 70, 69, 49, 57, 65, 116, 122, 104, 110, 83 },
                             phoneNumber = "1234567890",
                             role = "Admin",
                             userName = "admin"
@@ -283,7 +283,8 @@ namespace ClinicManagementSystem.DAL.Migrations
                 {
                     b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
                         .WithMany("patients")
-                        .HasForeignKey("doctorId");
+                        .HasForeignKey("doctorId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", "user")
                         .WithOne("patient")

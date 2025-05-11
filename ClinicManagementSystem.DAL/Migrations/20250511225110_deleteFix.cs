@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ClinicManagementSystem.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class FinalSchema : Migration
+    public partial class deleteFix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -19,8 +19,10 @@ namespace ClinicManagementSystem.DAL.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     firstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     lastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    userName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     password = table.Column<byte[]>(type: "varbinary(max)", nullable: false),
-                    role = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    role = table.Column<string>(type: "nvarchar(max)", nullable: false, defaultValue: "Patient"),
                     phoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
@@ -48,15 +50,37 @@ namespace ClinicManagementSystem.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ChatRooms",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    doctorId = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ChatRooms", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ChatRooms_Doctors_doctorId",
+                        column: x => x.doctorId,
+                        principalTable: "Doctors",
+                        principalColumn: "userId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "DoctorAppointments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     doctorId = table.Column<int>(type: "int", nullable: false),
-                    timeSlot = table.Column<TimeSpan>(type: "time", nullable: false),
                     date = table.Column<DateOnly>(type: "date", nullable: false),
-                    status = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    appointmentStart = table.Column<TimeOnly>(type: "time", nullable: false),
+                    appointmentEnd = table.Column<TimeOnly>(type: "time", nullable: false),
+                    duration = table.Column<TimeSpan>(type: "time", nullable: false, defaultValue: new TimeSpan(0, 2, 0, 0, 0))
                 },
                 constraints: table =>
                 {
@@ -89,7 +113,8 @@ namespace ClinicManagementSystem.DAL.Migrations
                         name: "FK_Patients_Doctors_doctorId",
                         column: x => x.doctorId,
                         principalTable: "Doctors",
-                        principalColumn: "userId");
+                        principalColumn: "userId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -99,6 +124,7 @@ namespace ClinicManagementSystem.DAL.Migrations
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     patientId = table.Column<int>(type: "int", nullable: false),
+                    note = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     describtion = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     doctorId = table.Column<int>(type: "int", nullable: false)
                 },
@@ -146,6 +172,16 @@ namespace ClinicManagementSystem.DAL.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
+            migrationBuilder.InsertData(
+                table: "ApplicationUsers",
+                columns: new[] { "id", "email", "firstName", "lastName", "password", "phoneNumber", "role", "userName" },
+                values: new object[] { 1, "admin@gmail.com", "Admin", "1", new byte[] { 36, 50, 97, 36, 49, 49, 36, 82, 110, 46, 109, 83, 57, 90, 47, 79, 76, 71, 57, 49, 89, 67, 68, 85, 56, 105, 90, 81, 101, 114, 107, 73, 82, 121, 106, 109, 117, 85, 102, 116, 113, 107, 80, 70, 55, 89, 108, 70, 83, 84, 70, 69, 49, 57, 65, 116, 122, 104, 110, 83 }, "1234567890", "Admin", "admin" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ChatRooms_doctorId",
+                table: "ChatRooms",
+                column: "doctorId");
+
             migrationBuilder.CreateIndex(
                 name: "IX_DoctorAppointments_doctorId",
                 table: "DoctorAppointments",
@@ -181,6 +217,9 @@ namespace ClinicManagementSystem.DAL.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "ChatRooms");
+
             migrationBuilder.DropTable(
                 name: "MedicalHistories");
 
