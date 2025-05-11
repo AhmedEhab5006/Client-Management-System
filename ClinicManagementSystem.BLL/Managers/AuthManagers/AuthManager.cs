@@ -43,27 +43,33 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
             return token;
         }
 
-        public async Task<string> Login(LoginDto loginDto)
+        public async Task<object> Login(LoginDto loginDto)
         {
             var logged = await _userRepository.GetByEmail(loginDto.email);
 
             if (logged == null)
-            {
                 return "Email not found";
-            }
 
             var hashed = await _userRepository.GetPassword(logged.email);
-            if (VerifyPassword(loginDto.password , hashed)){
-                
-                IList<Claim> claims = new List<Claim>();
-                claims.Add(new Claim(ClaimTypes.NameIdentifier, logged.id.ToString()));
-                claims.Add(new Claim(ClaimTypes.Name, logged.userName));
-                claims.Add(new Claim(ClaimTypes.Email, logged.email));
-                claims.Add(new Claim(ClaimTypes.Role, logged.role));
+            if (VerifyPassword(loginDto.password, hashed))
+            {
+                IList<Claim> claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, logged.id.ToString()),
+            new Claim(ClaimTypes.Name, logged.userName),
+            new Claim(ClaimTypes.Email, logged.email),
+            new Claim(ClaimTypes.Role, logged.role)
+        };
 
                 var token = GenerateToken(claims);
-               
-                return token;
+
+                var friendlyClaims = MapClaimsForFrontend(claims);
+
+                return new
+                {
+                    token,
+                    claims = friendlyClaims
+                };
             }
 
             return "Wrong Password";
@@ -135,6 +141,21 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
         {
             string storedHash = DecodePasswordFromByteArray(storedHashByteArray);
             return BCrypt.Net.BCrypt.Verify(inputPassword, storedHash);
+        }
+
+        public static Dictionary<string, string> MapClaimsForFrontend(IEnumerable<Claim> claims)
+        {
+            return claims.ToDictionary(
+                c => c.Type switch
+                {
+                    ClaimTypes.NameIdentifier => "id",
+                    ClaimTypes.Name => "username",
+                    ClaimTypes.Email => "email",
+                    ClaimTypes.Role => "role",
+                    _ => c.Type
+                },
+                c => c.Value
+            );
         }
     }
 }

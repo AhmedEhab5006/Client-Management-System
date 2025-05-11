@@ -11,7 +11,7 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
 {
     public interface IAuthManager
     {
-        public Task <string> Login(LoginDto loginDto);
+        public Task <object> Login(LoginDto loginDto);
         public Task<string> Register(RegisterDto registerDto);
         public string GenerateToken(IList<Claim> claims);
     }
