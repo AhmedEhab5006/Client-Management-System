@@ -45,14 +45,14 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
 
         public async Task<string> Login(LoginDto loginDto)
         {
-            var logged = _userRepository.GetByEmail(loginDto.email);
+            var logged = await _userRepository.GetByEmail(loginDto.email);
 
             if (logged == null)
             {
                 return "Email not found";
             }
 
-            var hashed = _userRepository.GetPassword(logged.email);
+            var hashed = await _userRepository.GetPassword(logged.email);
             if (VerifyPassword(loginDto.password , hashed)){
                 
                 IList<Claim> claims = new List<Claim>();

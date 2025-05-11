@@ -52,7 +52,7 @@ namespace ClinicManagementSystem.DAL.Repository
             return _context.ApplicationUsers;
         }
 
-        public ApplicationUser GetByEmail(string email)
+        public async Task <ApplicationUser> GetByEmail(string email)
         {
             var found = _context.ApplicationUsers.Where(a=>a.email == email).FirstOrDefault();
             
@@ -85,7 +85,7 @@ namespace ClinicManagementSystem.DAL.Repository
             return null;
         }
 
-        public byte[] GetPassword(string email)
+        public async Task <byte[]> GetPassword(string email)
         {
             var found = _context.ApplicationUsers.Where(a => a.email == email).Select(a => a.password).FirstOrDefault();
             if (found != null)

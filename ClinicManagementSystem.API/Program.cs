@@ -5,6 +5,7 @@ using ClinicManagementSystem.DAL.Database;
 using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.DAL.Repository;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.SignalR.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -35,8 +36,12 @@ internal class Program
         builder.Services.AddScoped<IMedicalHistoryRepository, MedicalHistoryRepository>();
         builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
         builder.Services.AddScoped<IPatientManager, PatientManager>();
+        builder.Services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
         builder.Services.AddHttpContextAccessor();
-        
+        builder.Services.AddSignalR();
+        builder.Services.AddSingleton<SharedDb>();
+
+
 
         builder.Services.AddDbContext<ProgramContext>(option =>
 
@@ -97,10 +102,31 @@ internal class Program
     });
         });
 
+
+
+
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll", builder =>
+            {
+                builder.WithOrigins("http://localhost:3000")
+                       .AllowAnyHeader()
+                       .AllowAnyMethod()
+                       .AllowCredentials();
+            });
+        });
+
+
         var app = builder.Build();
 
+        app.UseCors("AllowAll");
+        app.UseAuthentication();
+        app.UseAuthorization();
 
+        app.MapHub<Chat>("/chat");
+        app.UseHttpsRedirection();
 
+        app.MapControllers();
 
         // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
@@ -108,12 +134,6 @@ internal class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-
-        app.UseHttpsRedirection();
-
-        app.UseAuthorization();
-
-        app.MapControllers();
 
         app.Run();
     }

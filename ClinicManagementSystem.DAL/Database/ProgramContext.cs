@@ -98,6 +98,7 @@ namespace ClinicManagementSystem.DAL.Database
         public DbSet<Patient> Patients { get; set; }
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
+        public DbSet<ChatRoom> ChatRooms { get; set; }
     }
 
 }

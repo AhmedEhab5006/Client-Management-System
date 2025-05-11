@@ -1,4 +1,5 @@
-﻿using ClinicManagementSystem.BLL.Dto_s.DocDto;
+﻿using ClinicManagementSystem.BLL.Dto_s.ChatRoomDto;
+using ClinicManagementSystem.BLL.Dto_s.DocDto;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace ClinicManagementSystem.BLL.Managers
         public IEnumerable<AppointmentReadDto> GetAppointments(int docId);
         public IEnumerable<MedicalHistoryGetDto> GetFullMedicalHistory(int patientId);
         public bool AddMedicalHistory (MedicalHistoryAddDto addDto);
+        public void AddChatRoom (ChatRoomAddDto chatRoomAddDto);
         
     }
 }
