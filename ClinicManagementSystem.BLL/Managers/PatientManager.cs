@@ -143,6 +143,7 @@ namespace ClinicManagementSystem.BLL.Managers
                     appointmentEnd = a.appointmentEnd,
                     date = a.date,
                     duration = a.duration,
+                    id = a.Id
                 }).ToList();
 
                 return found;

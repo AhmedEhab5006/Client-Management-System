@@ -14,5 +14,6 @@ namespace ClinicManagementSystem.BLL.Dto_s.DocDto
         public TimeOnly appointmentStart { get; set; }
         public TimeOnly appointmentEnd { get; set; }
         public TimeSpan duration { get; set; }
+        public int id { get; set; }
     }
 }
