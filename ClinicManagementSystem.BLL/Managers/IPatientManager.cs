@@ -7,6 +7,7 @@ using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.DAL.Repository;
 using ClinicManagementSystem.BLL.Dto_s;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
+using ClinicManagementSystem.BLL.Dto_s.DocDto;
 
 
 
@@ -20,5 +21,6 @@ namespace ClinicManagementSystem.BLL.Managers
         IEnumerable<AppointmentGetDto> GetMyAppointments(int patientId);
         IEnumerable<MedicalHistoryGetDto> GetMyMedicalHistory(int patientId);
         public IEnumerable<DoctorsReadDto> GetAllDoctors();
+        public IEnumerable<AppointmentReadDto> GetDoctorAppointment(int doctorId);
     }
 }

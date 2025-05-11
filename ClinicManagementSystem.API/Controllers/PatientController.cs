@@ -121,7 +121,7 @@ namespace ClinicManagementSystem.API.Controllers
                     return NotFound("No medical history found.");
                 return Ok(medicalHistory);
             }
-            catch(UnauthorizedAccessException ex)
+            catch (UnauthorizedAccessException ex)
             {
                 return Unauthorized(ex.Message);
             }
@@ -146,6 +146,19 @@ namespace ClinicManagementSystem.API.Controllers
             }
 
             return NotFound("No doctors to show");
+        }
+
+        [HttpGet("GetAvailaleAppointments/{docID}")]
+        public IActionResult GetAvailableAppointments(int docID)
+        {
+            var found = _patientManager.GetDoctorAppointment(docID);
+
+            if (found.Count() > 0)
+            {
+                return Ok(found);
+            }
+
+            return Ok("No appointments for this doctor");
         }
     }
 }

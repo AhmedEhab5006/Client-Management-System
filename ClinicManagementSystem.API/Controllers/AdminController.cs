@@ -40,7 +40,7 @@ namespace ClinicManagementSystem.API.Controllers
             var check = _context.ApplicationUsers.Where(e => e.email == AddDoc.email).ToList();
             if (check.Count != 0)
             {
-                throw new Exception("Doctor with this email address already exists");
+                return Unauthorized("Doctor with this email address already exists");
             }
             _context.ApplicationUsers.Add(user);
             _context.SaveChanges();
@@ -52,7 +52,7 @@ namespace ClinicManagementSystem.API.Controllers
             _context.Doctors.Add(doctor);
             if (_context.SaveChanges() > 0)
                 return Ok();
-            throw new Exception("Could not add Doctor");
+            return BadRequest("Could not add Doctor");
 
         }
 
@@ -101,9 +101,9 @@ namespace ClinicManagementSystem.API.Controllers
                 docProp.location = editDoc.location;
                 if (_context.SaveChanges() > 0)
                     return Ok();
-                throw new Exception("No updates were made");
+                return BadRequest("No updates were made");
             }
-            throw new Exception("User Does not exist!!");
+            return NotFound("User Does not exist!!");
         }
 
         //4th Method : Removing a Doctor
@@ -113,14 +113,14 @@ namespace ClinicManagementSystem.API.Controllers
             var checkUser = _context.ApplicationUsers.Where(i => i.id == id).FirstOrDefault();
             if (checkUser == null)
             {
-                throw new Exception("Doctor does not exist");
+                return NotFound("Doctor does not exist");
             }
             var checkDoc = _context.Doctors.Where(i => i.userId == checkUser.id).FirstOrDefault();
             _context.Doctors.Remove(checkDoc);
             _context.ApplicationUsers.Remove(checkUser);
             if (_context.SaveChanges() > 0)
                 return Ok();
-            throw new Exception("Could not remove Doctor");
+            return BadRequest("Could not remove Doctor");
         }
 
         //5th Method : Assigning Doctor
@@ -146,11 +146,11 @@ namespace ClinicManagementSystem.API.Controllers
                     {
                         return Ok();
                     }
-                    throw new Exception("Could not add Doctor Appointment");
+                    return BadRequest("Could not add Doctor Appointment");
                 }
-                throw new Exception("Doctor already assigned");
+                return BadRequest("Doctor already assigned");
             }
-            throw new Exception("Doctor does not exist");
+            return NotFound("Doctor does not exist");
         }
 
         //Appointment Handling : 
@@ -188,10 +188,10 @@ namespace ClinicManagementSystem.API.Controllers
                 _context.Patients.Update(patient);
                 if (_context.SaveChanges() > 0)
                     return Ok();
-                throw new Exception("Could not confirm Reservation");
+                return BadRequest ("Could not confirm Reservation");
 
             }
-            throw new Exception("Reservation Not Found!!");
+            return NotFound("Reservation Not Found!!");
         }
 
 
@@ -213,9 +213,9 @@ namespace ClinicManagementSystem.API.Controllers
                 _context.Reservations.Remove(reservation);
                 if (_context.SaveChanges() > 0)
                     return Ok();
-                throw new Exception("Could not Cancel Reservation");
+                return BadRequest("Could not Cancel Reservation");
             }
-            throw new Exception("Reservation Not Found!!");
+            return NotFound("Reservation Not Found!!");
         }
 
 
@@ -242,15 +242,15 @@ namespace ClinicManagementSystem.API.Controllers
                 newAppointment.status = "Booked";
                 if (_context.SaveChanges() > 0)
                     return Ok();
-                throw new Exception("No Changes Made");
-            }throw new Exception("Reservation not Found!!");
+                return BadRequest("No Changes Made");
+            }return NotFound("Reservation not Found!!");
         }
 
 
 
         //This method returns the booked appointments of a Specific Doctor
         [HttpGet("DocReport/{docId}")]
-        public IEnumerable<DocReportDTO> DoctorReport(int docId)
+        public IActionResult DoctorReport(int docId)
         {
             var bookedDocAppointments = _context.DoctorAppointments.Where(i => i.doctorId == docId && i.status == "Booked").ToList();
             if(bookedDocAppointments.Count > 0)
@@ -277,8 +277,8 @@ namespace ClinicManagementSystem.API.Controllers
                         PatientUserName = patientName.userName
                     });
                 }
-                return docReportDTO;
-            }throw new Exception("No reserved appointments for this doctor"); 
+                return Ok (docReportDTO);
+            }return NotFound("No reserved appointments for this doctor"); 
         }
     }
 }

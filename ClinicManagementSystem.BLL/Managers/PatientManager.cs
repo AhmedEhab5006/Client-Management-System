@@ -8,6 +8,7 @@ using ClinicManagementSystem.DAL.Repository;
 using ClinicManagementSystem.BLL.Dto_s;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
 using Microsoft.EntityFrameworkCore;
+using ClinicManagementSystem.BLL.Dto_s.DocDto;
 
 namespace ClinicManagementSystem.BLL.Managers
 {
@@ -126,6 +127,29 @@ namespace ClinicManagementSystem.BLL.Managers
             }
 
             return null;
+        }
+
+        public IEnumerable<AppointmentReadDto> GetDoctorAppointment(int doctorId)
+        {
+           var foundModel = _appointmentRepository.Get(doctorId).ToList();
+
+           
+            if(foundModel != null)
+            {
+                var found = foundModel.Select(a=> new AppointmentReadDto
+                {
+                    status = a.status,
+                    appointmentStart = a.appointmentStart,
+                    appointmentEnd = a.appointmentEnd,
+                    date = a.date,
+                    duration = a.duration,
+                }).ToList();
+
+                return found;
+            }
+
+            return null;
+
         }
     }
 }
