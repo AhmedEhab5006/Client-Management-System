@@ -7,6 +7,7 @@ using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.DAL.Repository;
 using ClinicManagementSystem.BLL.Dto_s;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
+using Microsoft.EntityFrameworkCore;
 
 namespace ClinicManagementSystem.BLL.Managers
 {
@@ -42,6 +43,8 @@ namespace ClinicManagementSystem.BLL.Managers
             var reservation = _reservationRepository.GetById(dto.ReservationId);
             if(reservation == null || reservation.patientId != patientId)
                 return false;
+            var appointment = _appointmentRepository.GetById(reservation.appointmentId);
+            appointment.status = "Available";
             _reservationRepository.DeleteReservation(reservation);
             return true;
         }
@@ -51,6 +54,8 @@ namespace ClinicManagementSystem.BLL.Managers
             var reservation = _reservationRepository.GetById(dto.ReservationId);
             if (reservation == null || reservation.patientId != patientId)
                 return false;
+            var appointment = _appointmentRepository.GetById(reservation.appointmentId);
+            appointment.status = "Available";
             reservation.appointmentId = dto.NewDoctorAppointmentId;
             reservation.status = "Pending";
             _reservationRepository.UpdateReservation(reservation);

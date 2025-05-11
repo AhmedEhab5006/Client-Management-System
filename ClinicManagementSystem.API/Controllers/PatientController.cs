@@ -41,7 +41,7 @@ namespace ClinicManagementSystem.API.Controllers
             }
             catch (Exception ex)
             {
-                return StatusCode(500, "An unexpected error occurred while booking the appointment: " + ex.Message);
+                return StatusCode(500, "An unexpected error occurred while booking the appointment: " + ex.InnerException);
             }
         }
 
