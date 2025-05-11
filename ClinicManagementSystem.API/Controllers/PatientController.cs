@@ -24,12 +24,14 @@ namespace ClinicManagementSystem.API.Controllers
             return claim != null ? int.Parse(claim.Value) : 0;
         }
 
-        [HttpPost("BookAppointment")]
-        public IActionResult BookAppointment([FromBody] AppointmentBookingDto dto)
+        [HttpPost("BookAppointment/{id}")]
+        public IActionResult BookAppointment(int id)
         {
             try
             {
                 int patientId = GetPatientIdFromToken();
+                var dto = new AppointmentBookingDto();
+                dto.AppointmentId = id;
                 var success = _patientManager.BookAppointment(patientId, dto);
                 if (!success)
                     return BadRequest("Appointment not available or already booked.");
