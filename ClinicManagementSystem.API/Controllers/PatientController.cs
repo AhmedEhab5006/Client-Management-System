@@ -132,5 +132,18 @@ namespace ClinicManagementSystem.API.Controllers
                 return StatusCode(500, "An unexpected error occurred: " + ex.Message);
             }
         }
+
+        [HttpGet("GetAvailaleDoctors")]
+        public IActionResult GetAllDoctors()
+        {
+            var found = _patientManager.GetAllDoctors();
+
+            if (found.Count() > 0)
+            {
+                return Ok(found);
+            }
+
+            return NotFound("No doctors to show");
+        }
     }
 }

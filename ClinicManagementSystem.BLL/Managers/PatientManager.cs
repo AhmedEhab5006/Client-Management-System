@@ -15,11 +15,14 @@ namespace ClinicManagementSystem.BLL.Managers
         private readonly IReservationRepository _reservationRepository;
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IMedicalHistoryRepository _medicalHistoryRepository;
-        public PatientManager(IReservationRepository reservationRepo, IAppointmentRepository appointmentRepo, IMedicalHistoryRepository medicalHistoryRepo)
+        private readonly IDoctorRepository _doctorRepository;
+
+        public PatientManager(IReservationRepository reservationRepo, IAppointmentRepository appointmentRepo, IMedicalHistoryRepository medicalHistoryRepo , IDoctorRepository doctorRepository)
         {
             _appointmentRepository = appointmentRepo;
             _reservationRepository = reservationRepo;
             _medicalHistoryRepository = medicalHistoryRepo;
+            _doctorRepository = doctorRepository;
         }
 
         public bool BookAppointment(int patientId, AppointmentBookingDto dto)
@@ -95,6 +98,29 @@ namespace ClinicManagementSystem.BLL.Managers
             {
                 throw new ApplicationException("An error occurred while retrieving medical history.", ex);
             }
+        }
+
+        public IEnumerable<DoctorsReadDto> GetAllDoctors()
+        {
+            var foundModel = _doctorRepository.GetAll().Where(a => a.doctor.appointments.Count() > 0)
+                                                       .Where(a => a.doctor.appointments.FirstOrDefault().status == "Available")
+                                                       .ToList(); 
+
+            if (foundModel != null)
+            {
+                var found = foundModel.Select(a => new DoctorsReadDto
+                {
+                    major = a.doctor.major,
+                    Address = a.doctor.location,
+                    Id = a.id,
+                    Name = a.firstName + " " + a.lastName,
+                    phone = a.phoneNumber
+                }).ToList();
+
+                return found;
+            }
+
+            return null;
         }
     }
 }

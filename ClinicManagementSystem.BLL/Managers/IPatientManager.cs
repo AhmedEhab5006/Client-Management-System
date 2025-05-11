@@ -19,5 +19,6 @@ namespace ClinicManagementSystem.BLL.Managers
         bool RescheduleAppointment(AppointmentRescheduleDto dto, int patientId);
         IEnumerable<AppointmentGetDto> GetMyAppointments(int patientId);
         IEnumerable<MedicalHistoryGetDto> GetMyMedicalHistory(int patientId);
+        public IEnumerable<DoctorsReadDto> GetAllDoctors();
     }
 }

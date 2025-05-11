@@ -37,6 +37,7 @@ internal class Program
         builder.Services.AddScoped<IReservationRepository, ReservationRepository>();
         builder.Services.AddScoped<IPatientManager, PatientManager>();
         builder.Services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
+        builder.Services.AddScoped<IDoctorRepository , DoctorRepository>();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSignalR();
         builder.Services.AddSingleton<SharedDb>();
