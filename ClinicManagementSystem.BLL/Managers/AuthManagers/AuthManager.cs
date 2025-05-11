@@ -88,8 +88,8 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
                 phoneNumber = registerDto.phoneNumber
             };
 
-            var emailExists = _userRepository.GetByEmail(addedUser.email);
-            var userNameExists = _userRepository.GetByUserName(addedUser.userName);
+            var emailExists = await _userRepository.GetByEmail(addedUser.email);
+            var userNameExists =  _userRepository.GetByUserName(addedUser.userName);
 
             if (emailExists != null || userNameExists != null)
             {
