@@ -169,6 +169,8 @@ namespace ClinicManagementSystem.API.Controllers
             return ConfirmedReservations;
         }
 
+
+
         // Method To confirm "Reserve" a Pending Appointment
         [HttpPut("AdminConfirmAppointment/{reservationId}")]
         public IActionResult ConfirmReservation(int reservationId)
@@ -180,6 +182,7 @@ namespace ClinicManagementSystem.API.Controllers
                 Patient patient = new();
                 patient = _context.Patients.Where(a => a.userId == reservation.patientId).FirstOrDefault();
                 var getDoc = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault();
+                getDoc.status = "Booked";
                 //patient.userId = reservation.patientId;
                 patient.doctorId = getDoc.doctorId;
                 _context.Patients.Update(patient);
@@ -191,6 +194,8 @@ namespace ClinicManagementSystem.API.Controllers
             throw new Exception("Reservation Not Found!!");
         }
 
+
+
         //Method to cancel a pending OR confirmed Reservation
         [HttpDelete("CancelReservation/{reservationId}")]
         public IActionResult CancelReservation(int reservationId)
@@ -201,6 +206,7 @@ namespace ClinicManagementSystem.API.Controllers
                 if (reservation.status == "Reserved")
                 {
                     var getDoc = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault();
+                    getDoc.status = "Available";
                     var DocPatient = _context.Patients.Where(i => i.doctorId == getDoc.doctorId && i.userId == reservation.patientId).FirstOrDefault();
                     _context.Patients.Remove(DocPatient);
                 }
@@ -234,6 +240,41 @@ namespace ClinicManagementSystem.API.Controllers
                     return Ok();
                 throw new Exception("No Changes Made");
             }throw new Exception("Reservation not Found!!");
+        }
+
+
+
+        //This method returns the booked appointments of a Specific Doctor
+        [HttpGet("DocReport/{docId}")]
+        public IEnumerable<DocReportDTO> DoctorReport(int docId)
+        {
+            var bookedDocAppointments = _context.DoctorAppointments.Where(i => i.doctorId == docId && i.status == "Booked").ToList();
+            if(bookedDocAppointments.Count > 0)
+            {
+                //Constant through all of the doctor's appointments
+                var docName = _context.ApplicationUsers.Where(i => i.id == bookedDocAppointments[0].doctorId).FirstOrDefault().userName;
+                var docMajor = _context.Doctors.Where(i => i.userId == docId).FirstOrDefault().major;
+                List<DocReportDTO> docReportDTO = new();
+                for(int i = 0; i < bookedDocAppointments.Count; i++)
+                {
+                    var appointment = _context.DoctorAppointments.Where(x => x.Id == bookedDocAppointments[i].Id).FirstOrDefault();
+                    //from this get appointment id / date / start time
+                    var patId = _context.Reservations.Where(x => x.appointmentId == bookedDocAppointments[i].Id).FirstOrDefault().patientId;
+                    var patientName = _context.ApplicationUsers.Where(x => x.id == patId).FirstOrDefault();
+                    docReportDTO.Add(new DocReportDTO
+                    {
+                        id = docId,
+                        DocUserName = docName,
+                        major = docMajor,
+                        appointmentId = appointment.Id,
+                        date = appointment.date,
+                        appointmentStart = appointment.appointmentStart,
+                        patientId = patId,
+                        PatientUserName = patientName.userName
+                    });
+                }
+                return docReportDTO;
+            }throw new Exception("No reserved appointments for this doctor"); 
         }
     }
 }
