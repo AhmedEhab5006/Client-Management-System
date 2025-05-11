@@ -14,17 +14,18 @@ namespace ClinicManagementSystem.BLL.Managers
     {
         private readonly IReservationRepository _reservationRepository;
         private readonly IAppointmentRepository _appointmentRepository;
-
-        public PatientManager(IReservationRepository reservationRepo, IAppointmentRepository appointmentRepo)
+        private readonly IMedicalHistoryRepository _medicalHistoryRepository;
+        public PatientManager(IReservationRepository reservationRepo, IAppointmentRepository appointmentRepo, IMedicalHistoryRepository medicalHistoryRepo)
         {
             _appointmentRepository = appointmentRepo;
             _reservationRepository = reservationRepo;
+            _medicalHistoryRepository = medicalHistoryRepo;
         }
 
         public bool BookAppointment(int patientId, AppointmentBookingDto dto)
         {
             var appointment = _appointmentRepository.GetById(dto.AppointmentId);
-            if(appointment == null || appointment.status == "Booked")
+            if (appointment == null || appointment.status == "Booked")
                 return false;
             var reservation = new Reservation
             {
@@ -71,6 +72,29 @@ namespace ClinicManagementSystem.BLL.Managers
                 DoctorLocation = r.appointment.doctor.location
             });
             return result;
+        }
+
+        public IEnumerable<MedicalHistoryGetDto> GetMyMedicalHistory(int  patientId)
+        {
+            try
+            {
+                var history = _medicalHistoryRepository.GetFullHistory(patientId).ToList();
+                if (history == null || !history.Any())
+                    return Enumerable.Empty<MedicalHistoryGetDto>();
+                var result = history.Select(h => new MedicalHistoryGetDto
+                {
+                    id = h.id,
+                    patientId = h.patientId,
+                    Description = h.describtion,
+                    Note = h.note,
+                    DoctorName = h.doctor.user.firstName + " " + h.doctor.user.lastName
+                });
+                return result;
+            }
+            catch(Exception ex)
+            {
+                throw new ApplicationException("An error occurred while retrieving medical history.", ex);
+            }
         }
     }
 }

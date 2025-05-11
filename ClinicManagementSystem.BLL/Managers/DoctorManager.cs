@@ -91,7 +91,8 @@ namespace ClinicManagementSystem.BLL.Managers
                     Description = a.describtion,
                     id = a.id,
                     patientId = patientId,
-                    Note = a.note
+                    Note = a.note,
+                    DoctorName = a.doctor.user.firstName + " " + a.doctor.user.lastName
                 });
 
                 return found;
