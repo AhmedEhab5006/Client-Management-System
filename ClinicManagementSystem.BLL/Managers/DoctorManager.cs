@@ -109,6 +109,7 @@ namespace ClinicManagementSystem.BLL.Managers
             {
                 var found = foundModel.Select(a => new PatientReadDto
                 {
+                    id = a.userId,
                     firstName = a.user.firstName,
                     lastName = a.user.lastName,
                     issue = a.medicalHistory.Select(a => a.describtion).LastOrDefault() ?? "There is no history for this patient",
