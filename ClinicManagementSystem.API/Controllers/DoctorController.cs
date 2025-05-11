@@ -1,4 +1,5 @@
-﻿using ClinicManagementSystem.BLL.Dto_s.DocDto;
+﻿using ClinicManagementSystem.BLL.Dto_s.ChatRoomDto;
+using ClinicManagementSystem.BLL.Dto_s.DocDto;
 using ClinicManagementSystem.BLL.Helpers;
 using ClinicManagementSystem.BLL.Managers;
 using Microsoft.AspNetCore.Authorization;
@@ -79,6 +80,21 @@ namespace ClinicManagementSystem.API.Controllers
             }
 
             return NotFound("Desired Patient wasn't found");
+        }
+
+        [HttpPost("AddChatRoom")]
+        public IActionResult AddChatRoom ()
+        {
+            ChatRoomAddDto chatRoomAddDto = new ChatRoomAddDto();
+            chatRoomAddDto.doctorId = _getLoggedData.GetId();
+            chatRoomAddDto.Name = _getLoggedData.GetName();
+
+            _doctorManager.AddChatRoom(chatRoomAddDto);
+            return Created(nameof(chatRoomAddDto), new
+            {
+                chatRoomAddDto.doctorId,
+                chatRoomAddDto.Name,
+            });
         }
     }
 }

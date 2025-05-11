@@ -17,7 +17,7 @@ namespace ClinicManagementSystem.DAL.Repository
         public Task <int> AddAsync(ApplicationUser user);
         public IQueryable<ApplicationUser> GetAll();
         public ApplicationUser GetByUserName (string userName);
-        public ApplicationUser GetByEmail(string email);
-        public byte[] GetPassword (string email);
+        public Task <ApplicationUser> GetByEmail(string email);
+        public Task <byte[]> GetPassword (string email);
     }
 }

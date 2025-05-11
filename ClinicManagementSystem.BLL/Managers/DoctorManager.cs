@@ -1,4 +1,5 @@
-﻿using ClinicManagementSystem.BLL.Dto_s.DocDto;
+﻿using ClinicManagementSystem.BLL.Dto_s.ChatRoomDto;
+using ClinicManagementSystem.BLL.Dto_s.DocDto;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
 using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.DAL.Repository;
@@ -15,12 +16,23 @@ namespace ClinicManagementSystem.BLL.Managers
         private IPatientRepository _patientRepository;
         private IAppointmentRepository _appointmentRepository;
         private IMedicalHistoryRepository _medicalHistoryRepository;
+        private IChatRoomRepository _chatRoomRepository;
 
-        public DoctorManager (IPatientRepository patientRepository , IAppointmentRepository appointmentRepository , IMedicalHistoryRepository medicalHistoryRepository)
+        public DoctorManager (IPatientRepository patientRepository , IAppointmentRepository appointmentRepository , IMedicalHistoryRepository medicalHistoryRepository , IChatRoomRepository chatRoomRepository)
         {
             _patientRepository = patientRepository;
             _appointmentRepository = appointmentRepository;
             _medicalHistoryRepository = medicalHistoryRepository;
+            _chatRoomRepository = chatRoomRepository;
+        }
+
+        public void AddChatRoom(ChatRoomAddDto chatRoomAddDto)
+        {
+            _chatRoomRepository.AddRoom(new ChatRoom { 
+                doctorId = chatRoomAddDto.doctorId,
+                Name = chatRoomAddDto.Name,
+            });
+
         }
 
         public bool AddMedicalHistory(MedicalHistoryAddDto addDto)

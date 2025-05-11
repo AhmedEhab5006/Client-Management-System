@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace ClinicManagementSystem.BLL.Helpers
 {
-    public interface IGetLoggedData
+    public class UserConnection
     {
-        public int GetId();
-        public string GetName();
+        public string User { get; set; }
+        public string Room { get; set; }
 
     }
 }

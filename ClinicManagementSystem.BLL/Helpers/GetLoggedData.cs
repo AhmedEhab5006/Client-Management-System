@@ -26,5 +26,13 @@ namespace ClinicManagementSystem.BLL.Helpers
             return id;
 
         }
+
+        public string GetName()
+        {
+            var user = _httpContextAccessor.HttpContext?.User;
+            var name = Convert.ToString(user.FindFirst(ClaimTypes.Name)?.Value);
+
+            return name;
+        }
     }
 }
