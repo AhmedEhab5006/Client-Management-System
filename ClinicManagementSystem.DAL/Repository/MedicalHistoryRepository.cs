@@ -1,5 +1,6 @@
 ﻿using ClinicManagementSystem.DAL.Database;
 using ClinicManagementSystem.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,11 @@ namespace ClinicManagementSystem.DAL.Repository
 
         public IQueryable<MedicalHistory> GetFullHistory(int patientId)
         {
-            var found = _context.MedicalHistories.Where(a => a.patientId == patientId);
-            return found;
+            var found = _context.MedicalHistories
+                .Include(h => h.doctor)
+                .ThenInclude(d => d.user)
+                .Where(h => h.patientId == patientId);
+                 return found;
         }
     }
 }
