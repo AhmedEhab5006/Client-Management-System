@@ -91,14 +91,14 @@ namespace ClinicManagementSystem.API.Controllers
             if (DocUser != null)
             {
                 var newPassword = _passwordHandlerManager.HashPasswordToByteArray(editDoc.password);
-                editDoc.firstName = DocUser.firstName;
-                editDoc.lastName = DocUser.lastName;
-                editDoc.userName = DocUser.userName;
-                editDoc.email = DocUser.email;
-                newPassword = DocUser.password;
-                editDoc.phoneNumber = DocUser.phoneNumber;
-                editDoc.major = docProp.major;
-                editDoc.location = docProp.location;
+                DocUser.firstName = editDoc.firstName;
+                DocUser.lastName = editDoc.lastName;
+                DocUser.userName = editDoc.userName;
+                DocUser.email = editDoc.email;
+                DocUser.password = newPassword;
+                DocUser.phoneNumber = editDoc.phoneNumber;
+                docProp.major = editDoc.major;
+                docProp.location = editDoc.location;
                 if (_context.SaveChanges() > 0)
                     return Ok();
                 throw new Exception("No updates were made");
