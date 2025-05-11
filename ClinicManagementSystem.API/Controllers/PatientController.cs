@@ -45,13 +45,15 @@ namespace ClinicManagementSystem.API.Controllers
             }
         }
 
-        [HttpPost("CancelReservation")]
-        public IActionResult CancelAppointment([FromBody] AppointmentCancelDto dto)
+        [HttpPost("CancelReservation/{id}")]
+        public IActionResult CancelAppointment(int id)
         {
             try
             {
                 int patientId = GetPatientIdFromToken();
-                var success = _patientManager.CancelAppointment(dto, patientId);
+                var cancelDto = new AppointmentCancelDto();
+                cancelDto.ReservationId = id;
+                var success = _patientManager.CancelAppointment(cancelDto, patientId);
                 if (!success)
                     return BadRequest("Reservation not found or unauthorized");
                 return Ok("Reservation canceled successfully.");
