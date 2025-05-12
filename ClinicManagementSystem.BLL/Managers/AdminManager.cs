@@ -33,7 +33,7 @@ namespace ClinicManagementSystem.BLL.Managers
                 {
                     date = a.appointment.date,
                     doctorName = a.appointment.doctor.user.firstName + " " + a.appointment.doctor.user.lastName,
-                    id = a.appointment.Id,
+                    id = a.id,
                     patientName = a.patient.user.firstName + " " + a.patient.user.lastName,
                     time = a.appointment.appointmentStart
                 }).ToList();
@@ -74,7 +74,7 @@ namespace ClinicManagementSystem.BLL.Managers
                 {
                     date = a.appointment.date,
                     doctorName = a.appointment.doctor.user.firstName + " " + a.appointment.doctor.user.lastName,
-                    id = a.appointment.Id,
+                    id = a.id,
                     patientName = a.patient.user.firstName + " " + a.patient.user.lastName,
                     time = a.appointment.appointmentStart
                 }).ToList();
