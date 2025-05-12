@@ -37,13 +37,22 @@ namespace ClinicManagementSystem.DAL.Repository
             return found;
         }
 
-        public IQueryable<Patient> GetSpecificDoctorPatients(int doctorId)
+        public IQueryable<DoctorPatient> GetSpecificDoctorPatients(int doctorId)
         {
-            var found = _context.Patients
-                                    .Where(a => a.doctorId == doctorId)
-                                    .Include(a => a.medicalHistory)
-                                    .Include(a => a.user);
+            var found = _context.DoctorPatients
+                                    .Where(a => a.DoctorId == doctorId)
+                                    .Include(a => a.Patient.medicalHistory)
+                                    .Include(a => a.Patient.user);
             return found;
+        }
+
+        public void PendingPlus(int patientId)
+        {
+            var found = _context.Patients.Find(patientId);
+            if (found != null)
+            {
+                found.pendingAppointments += 1;
+            }
         }
     }
 }

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ClinicManagementSystem.DAL.Migrations
 {
     [DbContext(typeof(ProgramContext))]
-    [Migration("20250511225110_deleteFix")]
-    partial class deleteFix
+    [Migration("20250512204741_updateLogic")]
+    partial class updateLogic
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,7 +74,7 @@ namespace ClinicManagementSystem.DAL.Migrations
                             email = "admin@gmail.com",
                             firstName = "Admin",
                             lastName = "1",
-                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 82, 110, 46, 109, 83, 57, 90, 47, 79, 76, 71, 57, 49, 89, 67, 68, 85, 56, 105, 90, 81, 101, 114, 107, 73, 82, 121, 106, 109, 117, 85, 102, 116, 113, 107, 80, 70, 55, 89, 108, 70, 83, 84, 70, 69, 49, 57, 65, 116, 122, 104, 110, 83 },
+                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 85, 56, 88, 50, 116, 109, 113, 117, 121, 99, 103, 86, 80, 68, 85, 117, 113, 111, 52, 104, 110, 101, 99, 113, 108, 100, 71, 46, 47, 67, 87, 98, 52, 87, 114, 47, 99, 117, 85, 104, 112, 80, 82, 105, 80, 57, 81, 103, 110, 100, 49, 72, 46 },
                             phoneNumber = "1234567890",
                             role = "Admin",
                             userName = "admin"
@@ -156,6 +156,21 @@ namespace ClinicManagementSystem.DAL.Migrations
                     b.ToTable("DoctorAppointments");
                 });
 
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.DoctorPatient", b =>
+                {
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.HasKey("PatientId", "DoctorId");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("DoctorPatients");
+                });
+
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.MedicalHistory", b =>
                 {
                     b.Property<int>("id")
@@ -192,12 +207,16 @@ namespace ClinicManagementSystem.DAL.Migrations
                     b.Property<int>("userId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("doctorId")
+                    b.Property<int>("approvedAppointments")
+                        .HasColumnType("int");
+
+                    b.Property<int>("pendingAppointments")
+                        .HasColumnType("int");
+
+                    b.Property<int>("rejectedAppointments")
                         .HasColumnType("int");
 
                     b.HasKey("userId");
-
-                    b.HasIndex("doctorId");
 
                     b.ToTable("Patients");
                 });
@@ -224,8 +243,7 @@ namespace ClinicManagementSystem.DAL.Migrations
 
                     b.HasIndex("appointmentId");
 
-                    b.HasIndex("patientId")
-                        .IsUnique();
+                    b.HasIndex("patientId");
 
                     b.ToTable("Reservations");
                 });
@@ -263,6 +281,25 @@ namespace ClinicManagementSystem.DAL.Migrations
                     b.Navigation("doctor");
                 });
 
+            modelBuilder.Entity("ClinicManagementSystem.DAL.Models.DoctorPatient", b =>
+                {
+                    b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "Doctor")
+                        .WithMany("DoctorPatients")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("ClinicManagementSystem.DAL.Models.Patient", "Patient")
+                        .WithMany("DoctorPatients")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.MedicalHistory", b =>
                 {
                     b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
@@ -284,18 +321,11 @@ namespace ClinicManagementSystem.DAL.Migrations
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Patient", b =>
                 {
-                    b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "doctor")
-                        .WithMany("patients")
-                        .HasForeignKey("doctorId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("ClinicManagementSystem.DAL.Models.ApplicationUser", "user")
                         .WithOne("patient")
                         .HasForeignKey("ClinicManagementSystem.DAL.Models.Patient", "userId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("doctor");
 
                     b.Navigation("user");
                 });
@@ -309,8 +339,8 @@ namespace ClinicManagementSystem.DAL.Migrations
                         .IsRequired();
 
                     b.HasOne("ClinicManagementSystem.DAL.Models.Patient", "patient")
-                        .WithOne("appointment")
-                        .HasForeignKey("ClinicManagementSystem.DAL.Models.Reservation", "patientId")
+                        .WithMany("reservations")
+                        .HasForeignKey("patientId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -328,16 +358,18 @@ namespace ClinicManagementSystem.DAL.Migrations
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Doctor", b =>
                 {
-                    b.Navigation("appointments");
+                    b.Navigation("DoctorPatients");
 
-                    b.Navigation("patients");
+                    b.Navigation("appointments");
                 });
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.Patient", b =>
                 {
-                    b.Navigation("appointment");
+                    b.Navigation("DoctorPatients");
 
                     b.Navigation("medicalHistory");
+
+                    b.Navigation("reservations");
                 });
 #pragma warning restore 612, 618
         }

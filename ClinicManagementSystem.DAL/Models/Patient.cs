@@ -11,9 +11,11 @@ namespace ClinicManagementSystem.DAL.Models
     {
         public int userId { get; set; }
         public ApplicationUser? user { get; set; }
-        public Reservation? appointment { get; set; }
-        public int? doctorId { get; set; }
-        public Doctor? doctor { get; set; }
+        public int approvedAppointments { get; set; }
+        public int pendingAppointments { get; set; }
+        public int rejectedAppointments { get; set; }
+        public ICollection<Reservation>? reservations { get; set; }
+        public ICollection<DoctorPatient>? DoctorPatients { get; set; } = new List<DoctorPatient>();
         public ICollection<MedicalHistory>? medicalHistory { get; set; }
 
 

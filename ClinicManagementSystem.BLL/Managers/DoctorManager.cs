@@ -109,13 +109,13 @@ namespace ClinicManagementSystem.BLL.Managers
             {
                 var found = foundModel.Select(a => new PatientReadDto
                 {
-                    id = a.userId,
-                    firstName = a.user.firstName,
-                    lastName = a.user.lastName,
-                    issue = a.medicalHistory.Select(a => a.describtion).LastOrDefault() ?? "There is no history for this patient",
-                    notes = a.medicalHistory.Select(a => a.note).LastOrDefault() ?? "There is no history for this patient",
+                    id = a.Patient.userId,
+                    firstName = a.Patient.user.firstName,
+                    lastName = a.Patient.user.lastName,
+                    issue = a.Patient.medicalHistory.Select(a => a.describtion).LastOrDefault() ?? "There is no history for this patient",
+                    notes = a.Patient.medicalHistory.Select(a => a.note).LastOrDefault() ?? "There is no history for this patient",
 
-                    phoneNumber = a.user.phoneNumber
+                    phoneNumber = a.Patient.user.phoneNumber
                 });
 
                 return found;

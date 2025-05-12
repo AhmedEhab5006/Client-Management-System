@@ -61,17 +61,19 @@ namespace ClinicManagementSystem.DAL.Database
                 .WithOne(u => u.doctor)
                 .HasForeignKey<Doctor>(p => p.userId);
 
-            builder.Entity<Doctor>()
-                .HasMany(d => d.patients)
-                .WithOne(p => p.doctor)
-                .HasForeignKey(p => p.doctorId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<Doctor>()
+            //    .HasMany(d => d.patients)
+            //    .WithOne(p => p.doctor)
+            //    .HasForeignKey(p => p.doctorId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
-            builder.Entity<Patient>()
-                .HasOne(a => a.doctor)
-                .WithMany(d => d.patients)
-                .HasForeignKey(a => a.doctorId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<Patient>()
+            //    .HasOne(a => a.doctor)
+            //    .WithMany(d => d.patients)
+            //    .HasForeignKey(a => a.doctorId)
+            //    .OnDelete(DeleteBehavior.Restrict);
+
+
 
 
             // Patient ↔ ApplicationUser (One-to-One)
@@ -91,16 +93,37 @@ namespace ClinicManagementSystem.DAL.Database
                 .OnDelete(DeleteBehavior.Restrict); // Keep cascade here
 
             // Patient ↔ Reservation (One-to-Many with Restrict to avoid cascade conflict)
-            builder.Entity<Patient>()
-                .HasOne(r => r.appointment)
-                .WithOne(p => p.patient)
-                .HasForeignKey<Reservation>(r => r.patientId)
-                .OnDelete(DeleteBehavior.Restrict);
+            //builder.Entity<Patient>()
+            //    .HasOne(r => r.appointment)
+            //    .WithOne(p => p.patient)
+            //    .HasForeignKey<Reservation>(r => r.patientId)
+            //    .OnDelete(DeleteBehavior.Restrict);
 
 
             builder.Entity<DoctorAppointment>()
                 .Property(p => p.duration)
                 .HasDefaultValue(new TimeSpan(2, 0, 0));
+
+            builder.Entity<DoctorPatient>()
+                .HasKey(dp => new { dp.PatientId, dp.DoctorId });
+
+            builder.Entity<DoctorPatient>()
+                .HasOne(dp => dp.Patient)
+                .WithMany(p => p.DoctorPatients)
+                .HasForeignKey(dp => dp.PatientId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<DoctorPatient>()
+                .HasOne(dp => dp.Doctor)
+                .WithMany(d => d.DoctorPatients)
+                .HasForeignKey(dp => dp.DoctorId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            builder.Entity<Reservation>()
+                .HasOne(r => r.patient)
+                .WithMany(p => p.reservations)
+                .HasForeignKey(r => r.patientId)
+                .OnDelete(DeleteBehavior.Restrict);
 
 
         }
@@ -112,6 +135,7 @@ namespace ClinicManagementSystem.DAL.Database
         public DbSet<ApplicationUser> ApplicationUsers { get; set; }
         public DbSet<Reservation> Reservations { get; set; }
         public DbSet<ChatRoom> ChatRooms { get; set; }
+        public DbSet<DoctorPatient> DoctorPatients { get; set; }
     }
 
 }

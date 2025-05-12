@@ -101,7 +101,10 @@ namespace ClinicManagementSystem.BLL.Managers.AuthManagers
             var addingResult = await _userRepository.AddAsync(addedUser);
             _patientRepostiory.AddPatient(new Patient
             {
-                userId = addingResult
+                userId = addingResult,
+                approvedAppointments = 0,
+                pendingAppointments = 0,
+                rejectedAppointments = 0,       
             });
 
             if (addingResult != 0)

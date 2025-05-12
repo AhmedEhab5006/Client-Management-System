@@ -194,11 +194,21 @@ namespace ClinicManagementSystem.API.Controllers
             {
                 reservation.status = "Reserved";
                 Patient patient = new();
+                DoctorPatient doctorPatient = new DoctorPatient();
                 patient = _context.Patients.Where(a => a.userId == reservation.patientId).FirstOrDefault();
                 var getDoc = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault();
                 getDoc.status = "Booked";
                 //patient.userId = reservation.patientId;
-                patient.doctorId = getDoc.doctorId;
+                doctorPatient.DoctorId = getDoc.doctorId;
+                doctorPatient.PatientId = reservation.patientId;
+                _context.DoctorPatients.Add(doctorPatient);
+                patient.approvedAppointments += 1;
+
+                if(patient.pendingAppointments > 0)
+                {
+                    patient.pendingAppointments -= 1;
+                }
+
                 _context.Patients.Update(patient);
                 if (_context.SaveChanges() > 0)
                     return Ok();
@@ -221,8 +231,17 @@ namespace ClinicManagementSystem.API.Controllers
                 {
                     var getDoc = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault();
                     getDoc.status = "Available";
-                    var DocPatient = _context.Patients.Where(i => i.doctorId == getDoc.doctorId && i.userId == reservation.patientId).FirstOrDefault();
-                    _context.Patients.Remove(DocPatient);
+                    var DocPatient = _context.DoctorPatients.Where(i => i.DoctorId == getDoc.doctorId && i.Patient.userId == reservation.patientId).FirstOrDefault();
+                    var patient = _context.Patients.Find(reservation.patientId);
+
+                    if (patient.approvedAppointments > 0)
+                    {
+                        patient.approvedAppointments -= 1;
+                    }
+
+                    patient.rejectedAppointments += 1;
+                    _context.DoctorPatients.Remove(DocPatient);
+
                 }
                 _context.Reservations.Remove(reservation);
                 if (_context.SaveChanges() > 0)

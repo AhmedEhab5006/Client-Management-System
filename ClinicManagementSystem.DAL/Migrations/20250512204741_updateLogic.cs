@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace ClinicManagementSystem.DAL.Migrations
 {
     /// <inheritdoc />
-    public partial class deleteFix : Migration
+    public partial class updateLogic : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -43,6 +43,26 @@ namespace ClinicManagementSystem.DAL.Migrations
                     table.PrimaryKey("PK_Doctors", x => x.userId);
                     table.ForeignKey(
                         name: "FK_Doctors_ApplicationUsers_userId",
+                        column: x => x.userId,
+                        principalTable: "ApplicationUsers",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Patients",
+                columns: table => new
+                {
+                    userId = table.Column<int>(type: "int", nullable: false),
+                    approvedAppointments = table.Column<int>(type: "int", nullable: false),
+                    pendingAppointments = table.Column<int>(type: "int", nullable: false),
+                    rejectedAppointments = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Patients", x => x.userId);
+                    table.ForeignKey(
+                        name: "FK_Patients_ApplicationUsers_userId",
                         column: x => x.userId,
                         principalTable: "ApplicationUsers",
                         principalColumn: "id",
@@ -94,25 +114,25 @@ namespace ClinicManagementSystem.DAL.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Patients",
+                name: "DoctorPatients",
                 columns: table => new
                 {
-                    userId = table.Column<int>(type: "int", nullable: false),
-                    doctorId = table.Column<int>(type: "int", nullable: true)
+                    PatientId = table.Column<int>(type: "int", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Patients", x => x.userId);
+                    table.PrimaryKey("PK_DoctorPatients", x => new { x.PatientId, x.DoctorId });
                     table.ForeignKey(
-                        name: "FK_Patients_ApplicationUsers_userId",
-                        column: x => x.userId,
-                        principalTable: "ApplicationUsers",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Patients_Doctors_doctorId",
-                        column: x => x.doctorId,
+                        name: "FK_DoctorPatients_Doctors_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "Doctors",
+                        principalColumn: "userId",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_DoctorPatients_Patients_PatientId",
+                        column: x => x.PatientId,
+                        principalTable: "Patients",
                         principalColumn: "userId",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -175,7 +195,7 @@ namespace ClinicManagementSystem.DAL.Migrations
             migrationBuilder.InsertData(
                 table: "ApplicationUsers",
                 columns: new[] { "id", "email", "firstName", "lastName", "password", "phoneNumber", "role", "userName" },
-                values: new object[] { 1, "admin@gmail.com", "Admin", "1", new byte[] { 36, 50, 97, 36, 49, 49, 36, 82, 110, 46, 109, 83, 57, 90, 47, 79, 76, 71, 57, 49, 89, 67, 68, 85, 56, 105, 90, 81, 101, 114, 107, 73, 82, 121, 106, 109, 117, 85, 102, 116, 113, 107, 80, 70, 55, 89, 108, 70, 83, 84, 70, 69, 49, 57, 65, 116, 122, 104, 110, 83 }, "1234567890", "Admin", "admin" });
+                values: new object[] { 1, "admin@gmail.com", "Admin", "1", new byte[] { 36, 50, 97, 36, 49, 49, 36, 85, 56, 88, 50, 116, 109, 113, 117, 121, 99, 103, 86, 80, 68, 85, 117, 113, 111, 52, 104, 110, 101, 99, 113, 108, 100, 71, 46, 47, 67, 87, 98, 52, 87, 114, 47, 99, 117, 85, 104, 112, 80, 82, 105, 80, 57, 81, 103, 110, 100, 49, 72, 46 }, "1234567890", "Admin", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ChatRooms_doctorId",
@@ -188,6 +208,11 @@ namespace ClinicManagementSystem.DAL.Migrations
                 column: "doctorId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_DoctorPatients_DoctorId",
+                table: "DoctorPatients",
+                column: "DoctorId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_MedicalHistories_doctorId",
                 table: "MedicalHistories",
                 column: "doctorId");
@@ -198,11 +223,6 @@ namespace ClinicManagementSystem.DAL.Migrations
                 column: "patientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Patients_doctorId",
-                table: "Patients",
-                column: "doctorId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reservations_appointmentId",
                 table: "Reservations",
                 column: "appointmentId");
@@ -210,8 +230,7 @@ namespace ClinicManagementSystem.DAL.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Reservations_patientId",
                 table: "Reservations",
-                column: "patientId",
-                unique: true);
+                column: "patientId");
         }
 
         /// <inheritdoc />
@@ -219,6 +238,9 @@ namespace ClinicManagementSystem.DAL.Migrations
         {
             migrationBuilder.DropTable(
                 name: "ChatRooms");
+
+            migrationBuilder.DropTable(
+                name: "DoctorPatients");
 
             migrationBuilder.DropTable(
                 name: "MedicalHistories");

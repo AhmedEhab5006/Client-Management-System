@@ -13,6 +13,7 @@ namespace ClinicManagementSystem.DAL.Models
         public string major { get; set; }
         public string location { get; set; }
         public ICollection<DoctorAppointment>? appointments { get; set; }
-        public ICollection<Patient>? patients { get; set; }
+        public ICollection<DoctorPatient>? DoctorPatients { get; set; } = new List<DoctorPatient>();
+
     }
 }

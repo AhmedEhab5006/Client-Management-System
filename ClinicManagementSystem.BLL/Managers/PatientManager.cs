@@ -18,13 +18,15 @@ namespace ClinicManagementSystem.BLL.Managers
         private readonly IAppointmentRepository _appointmentRepository;
         private readonly IMedicalHistoryRepository _medicalHistoryRepository;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly IPatientRepository _patientRepository;
 
-        public PatientManager(IReservationRepository reservationRepo, IAppointmentRepository appointmentRepo, IMedicalHistoryRepository medicalHistoryRepo , IDoctorRepository doctorRepository)
+        public PatientManager(IReservationRepository reservationRepo, IAppointmentRepository appointmentRepo, IMedicalHistoryRepository medicalHistoryRepo , IDoctorRepository doctorRepository , IPatientRepository patientRepository)
         {
             _appointmentRepository = appointmentRepo;
             _reservationRepository = reservationRepo;
             _medicalHistoryRepository = medicalHistoryRepo;
             _doctorRepository = doctorRepository;
+            _patientRepository = patientRepository;
         }
 
         public bool BookAppointment(int patientId, AppointmentBookingDto dto)
@@ -38,7 +40,9 @@ namespace ClinicManagementSystem.BLL.Managers
                 patientId = patientId,
                 status = "Pending"
             };
+            
             _reservationRepository.AddReservation(reservation);
+            _patientRepository.PendingPlus(reservation.patientId);
             return true;
         }
 
