@@ -16,6 +16,7 @@ namespace ClinicManagementSystem.BLL.Dto_s.PatientDto_s
         public string DoctorName { get; set; }
         public string DoctorSpecialization { get; set; }
         public string DoctorLocation { get; set; }
+        public int docId { get; set; }
 
     }
 }

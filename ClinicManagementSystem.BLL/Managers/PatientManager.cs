@@ -68,19 +68,26 @@ namespace ClinicManagementSystem.BLL.Managers
 
         public IEnumerable<AppointmentGetDto> GetMyAppointments(int patientId)
         {
-            var reservations = _reservationRepository.GetByPatientId(patientId);
-            var result = reservations.Select(r => new AppointmentGetDto
-            {
-                ReservationId = r.id,
-                AppointmentDate = r.appointment.date,
-                AppointmentStart = r.appointment.appointmentStart,
-                AppointmentEnd = r.appointment.appointmentEnd,
-                Status = r.status,
-                DoctorName = r.appointment.doctor.user.firstName + " " + r.appointment.doctor.user.lastName,
-                DoctorSpecialization = r.appointment.doctor.major,
-                DoctorLocation = r.appointment.doctor.location
+            var reservations = _reservationRepository.GetByPatientId(patientId).ToList();
+
+            if (reservations.Count() > 0) {
+                var app = _appointmentRepository.GetById(reservations.FirstOrDefault().appointmentId);
+                var result = reservations.Select(r => new AppointmentGetDto
+                {
+                    ReservationId = r.id,
+                    AppointmentDate = r.appointment.date,
+                    AppointmentStart = r.appointment.appointmentStart,
+                    AppointmentEnd = r.appointment.appointmentEnd,
+                    Status = r.status,
+                    DoctorName = r.appointment.doctor.user.firstName + " " + r.appointment.doctor.user.lastName,
+                    DoctorSpecialization = r.appointment.doctor.major,
+                    DoctorLocation = r.appointment.doctor.location,
+                    docId = app.doctorId
             });
-            return result;
+                return result;
+            }
+
+            return null;
         }
 
         public IEnumerable<MedicalHistoryGetDto> GetMyMedicalHistory(int  patientId)
