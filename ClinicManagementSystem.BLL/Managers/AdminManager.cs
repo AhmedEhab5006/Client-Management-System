@@ -27,13 +27,13 @@ namespace ClinicManagementSystem.BLL.Managers
                 var foundPassword = _passwordHadnlerManager.DecodePasswordFromByteArray(foundModel.password);
                 var found = new DoctorReadDto { 
                     Id = foundModel.id,
-                    firstname = foundModel.firstName,
-                    lastname = foundModel.lastName,
-                    username = foundModel.userName,
+                    firstName = foundModel.firstName,
+                    lastName = foundModel.lastName,
+                    userName = foundModel.userName,
                     email = foundModel.email,
-                    Address = foundModel.doctor.location,
+                    location = foundModel.doctor.location,
                     major = foundModel.doctor.major,
-                    phone = foundModel.phoneNumber,
+                    phoneNumber = foundModel.phoneNumber,
                     password = foundPassword,
                 };
 
