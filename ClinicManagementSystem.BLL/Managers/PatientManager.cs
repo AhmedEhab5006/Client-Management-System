@@ -116,7 +116,7 @@ namespace ClinicManagementSystem.BLL.Managers
         public IEnumerable<DoctorsReadDto> GetAllDoctors()
         {
             var foundModel = _doctorRepository.GetAll().Where(a => a.doctor.appointments.Count() > 0)
-                                                       .Where(a => a.doctor.appointments.FirstOrDefault().status == "Available")
+                                                       .Where(a => a.doctor.appointments.LastOrDefault().status == "Available")
                                                        .ToList(); 
 
             if (foundModel != null)
