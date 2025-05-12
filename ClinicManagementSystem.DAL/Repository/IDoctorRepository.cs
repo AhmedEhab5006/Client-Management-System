@@ -10,5 +10,6 @@ namespace ClinicManagementSystem.DAL.Repository
     public interface IDoctorRepository
     {
         public IEnumerable<ApplicationUser> GetAll();
+        public ApplicationUser GetById(int id);
     }
 }

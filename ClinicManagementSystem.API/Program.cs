@@ -38,6 +38,7 @@ internal class Program
         builder.Services.AddScoped<IPatientManager, PatientManager>();
         builder.Services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
         builder.Services.AddScoped<IDoctorRepository , DoctorRepository>();
+        builder.Services.AddScoped<IAdminManager, AdminManager>();
         builder.Services.AddHttpContextAccessor();
         builder.Services.AddSignalR();
         builder.Services.AddSingleton<SharedDb>();

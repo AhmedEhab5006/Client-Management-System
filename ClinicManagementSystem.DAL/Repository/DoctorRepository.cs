@@ -26,5 +26,14 @@ namespace ClinicManagementSystem.DAL.Repository
 
             return found;
         }
+
+        public ApplicationUser GetById(int id)
+        {
+            var found = _context.ApplicationUsers.Where(a=>a.id == id)
+                                                 .Include(a=>a.doctor)
+                                                 .FirstOrDefault();
+
+            return found;
+        }
     }
 }

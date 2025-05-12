@@ -16,11 +16,13 @@ namespace ClinicManagementSystem.API.Controllers
 
         private readonly ProgramContext _context;
         private readonly IPasswordHandlerManager _passwordHandlerManager;
+        private readonly IAdminManager _adminManager;
 
-        public AdminController(IConfiguration config , IPasswordHandlerManager passwordHandlerManager)
+        public AdminController(IConfiguration config , IPasswordHandlerManager passwordHandlerManager , IAdminManager adminManager)
         {
             _context = new(config);
             _passwordHandlerManager = passwordHandlerManager;
+            _adminManager = adminManager;
         }
 
 
@@ -279,6 +281,20 @@ namespace ClinicManagementSystem.API.Controllers
                 }
                 return Ok (docReportDTO);
             }return NotFound("No reserved appointments for this doctor"); 
+
+            
+        }
+        [HttpGet("GetDocById/{id}")]
+        public IActionResult GetDocById (int id)
+        {
+            var found = _adminManager.GetDocById(id);
+
+            if (found != null)
+            {
+                return Ok (found);
+            }
+
+            return NotFound("No doctor with that id");
         }
     }
 }

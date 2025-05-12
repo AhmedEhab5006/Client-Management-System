@@ -160,7 +160,7 @@ namespace ClinicManagementSystem.API.Controllers
                 return Ok(found);
             }
 
-            return Ok("No appointments for this doctor");
+            return NotFound("No appointments for this doctor");
         }
     }
 }
