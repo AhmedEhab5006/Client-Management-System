@@ -131,7 +131,7 @@ namespace ClinicManagementSystem.BLL.Managers
 
         public IEnumerable<AppointmentReadDto> GetDoctorAppointment(int doctorId)
         {
-           var foundModel = _appointmentRepository.Get(doctorId).ToList();
+           var foundModel = _appointmentRepository.Get(doctorId).Where(a=>a.status == "Available").ToList();
 
            
             if(foundModel != null)
