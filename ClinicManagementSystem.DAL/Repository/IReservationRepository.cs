@@ -14,5 +14,7 @@ namespace ClinicManagementSystem.DAL.Repository
         void UpdateReservation(Reservation reservation);
         Reservation GetById(int id);
         IQueryable<Reservation> GetByPatientId(int patientId);
+        public IQueryable<Reservation> GetAllPendingAppointments();
+        public IQueryable<Reservation> GetAllApprovedAppointments();
     }
 }

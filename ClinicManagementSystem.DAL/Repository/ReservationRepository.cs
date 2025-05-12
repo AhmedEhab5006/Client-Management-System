@@ -47,5 +47,27 @@ namespace ClinicManagementSystem.DAL.Repository
                 .ThenInclude(d => d.user)
                 .Where(r => r.patientId == patientId);
         }
+
+        public IQueryable<Reservation> GetAllPendingAppointments()
+        {
+            var found = _context.Reservations.Where(a => a.status == "Pending")
+                                              .Include(a => a.patient.user)
+                                              .Include(a => a.appointment.doctor.user)
+                                              .Include(a => a.appointment);
+
+            return found;
+
+
+        }
+
+        public IQueryable<Reservation> GetAllApprovedAppointments()
+        {
+            var found = _context.Reservations.Where(a => a.status == "Reserved")
+                                  .Include(a => a.patient.user)
+                                  .Include(a => a.appointment.doctor.user)
+                                  .Include(a => a.appointment);
+
+            return found;
+        }
     }
 }

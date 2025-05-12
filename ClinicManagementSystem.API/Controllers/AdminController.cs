@@ -158,17 +158,29 @@ namespace ClinicManagementSystem.API.Controllers
         //Appointment Handling : 
 
         [HttpGet("GetPendingAppointments")]
-        public IEnumerable<Reservation> listRequestedAppointments()
+        public IActionResult listRequestedAppointments()
         {
-            var PendingReservations = _context.Reservations.Where(i => i.status == "Pending");
-            return PendingReservations;
+            var PendingReservations = _adminManager.GetAllPendingAppointments();
+            
+            if (PendingReservations.Count() > 0)
+            {
+                return Ok(PendingReservations);
+            }
+
+            return NotFound("No Pending Reservations");
         }
 
         [HttpGet("GetConfirmedAppointments")]
-        public IEnumerable<Reservation> listReservedAppointments()
+        public IActionResult listReservedAppointments()
         {
-            var ConfirmedReservations = _context.Reservations.Where(i => i.status == "Reserved");
-            return ConfirmedReservations;
+            var ConfirmedReservations = _adminManager.GetAllApprovedAppointments();
+            
+            if (ConfirmedReservations.Count() > 0)
+            {
+                return Ok(ConfirmedReservations);
+            }
+
+            return NotFound("No Approved Appointments");
         }
 
 

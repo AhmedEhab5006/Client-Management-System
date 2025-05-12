@@ -1,5 +1,6 @@
 ﻿using ClinicManagementSystem.BLL.Dto_s.AdminDTO;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
+using ClinicManagementSystem.DAL.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace ClinicManagementSystem.BLL.Managers
     public interface IAdminManager 
     {
         public DoctorReadDto GetDocById (int id);
+        public IEnumerable<PendingReadDto> GetAllPendingAppointments();
+        public IEnumerable<PendingReadDto> GetAllApprovedAppointments();
     }
 }

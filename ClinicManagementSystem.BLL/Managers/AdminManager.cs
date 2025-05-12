@@ -13,10 +13,55 @@ namespace ClinicManagementSystem.BLL.Managers
     {
         private IDoctorRepository _doctorRepository;
         private IPasswordHandlerManager _passwordHadnlerManager;
+        private IReservationRepository _reservationRepository;
 
-        public AdminManager(IDoctorRepository doctorRepository , IPasswordHandlerManager passwordHandlerManager) {
+        public AdminManager(IDoctorRepository doctorRepository , IPasswordHandlerManager passwordHandlerManager , IReservationRepository reservationRepository) {
             _doctorRepository = doctorRepository;
             _passwordHadnlerManager = passwordHandlerManager;
+            _reservationRepository = reservationRepository;
+        }
+
+        public IEnumerable<PendingReadDto> GetAllApprovedAppointments()
+        {
+            var foundModel = _reservationRepository.GetAllApprovedAppointments().ToList();
+
+            if (foundModel != null)
+            {
+                var found = foundModel.Select(a => new PendingReadDto
+                {
+                    date = a.appointment.date,
+                    doctorName = a.appointment.doctor.user.firstName + " " + a.appointment.doctor.user.lastName,
+                    id = a.appointment.Id,
+                    patientName = a.patient.user.firstName + " " + a.patient.user.lastName,
+                    time = a.appointment.appointmentStart
+                }).ToList();
+
+                return found;
+            }
+
+            return null;
+        }
+
+        public IEnumerable<PendingReadDto> GetAllPendingAppointments()
+        {
+            var foundModel = _reservationRepository.GetAllPendingAppointments().ToList();
+
+            if (foundModel != null)
+            {
+                var found = foundModel.Select(a => new PendingReadDto
+                {
+                    date = a.appointment.date,
+                    doctorName = a.appointment.doctor.user.firstName + " " + a.appointment.doctor.user.lastName,
+                    id = a.appointment.Id,
+                    patientName = a.patient.user.firstName + " " + a.patient.user.lastName,
+                    time = a.appointment.appointmentStart
+                }).ToList();
+
+                return found;
+            }
+
+            return null;
+
         }
 
         public DoctorReadDto GetDocById(int id)
