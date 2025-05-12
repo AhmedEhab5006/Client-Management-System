@@ -105,7 +105,11 @@ namespace ClinicManagementSystem.DAL.Database
                 .HasDefaultValue(new TimeSpan(2, 0, 0));
 
             builder.Entity<DoctorPatient>()
-                .HasKey(dp => new { dp.PatientId, dp.DoctorId });
+                .HasKey(dp => dp.id); // Primary key
+
+            builder.Entity<DoctorPatient>()
+                .Property(dp => dp.id)
+                .ValueGeneratedOnAdd(); // Makes it an identity column
 
             builder.Entity<DoctorPatient>()
                 .HasOne(dp => dp.Patient)

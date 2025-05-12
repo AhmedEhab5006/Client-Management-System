@@ -71,7 +71,7 @@ namespace ClinicManagementSystem.DAL.Migrations
                             email = "admin@gmail.com",
                             firstName = "Admin",
                             lastName = "1",
-                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 85, 56, 88, 50, 116, 109, 113, 117, 121, 99, 103, 86, 80, 68, 85, 117, 113, 111, 52, 104, 110, 101, 99, 113, 108, 100, 71, 46, 47, 67, 87, 98, 52, 87, 114, 47, 99, 117, 85, 104, 112, 80, 82, 105, 80, 57, 81, 103, 110, 100, 49, 72, 46 },
+                            password = new byte[] { 36, 50, 97, 36, 49, 49, 36, 78, 98, 108, 116, 47, 78, 70, 86, 53, 66, 47, 110, 78, 104, 79, 66, 56, 113, 57, 119, 105, 101, 118, 113, 56, 101, 89, 121, 97, 65, 107, 104, 118, 76, 89, 120, 114, 70, 78, 114, 75, 66, 117, 109, 112, 86, 107, 67, 110, 97, 51, 113, 54 },
                             phoneNumber = "1234567890",
                             role = "Admin",
                             userName = "admin"
@@ -155,15 +155,23 @@ namespace ClinicManagementSystem.DAL.Migrations
 
             modelBuilder.Entity("ClinicManagementSystem.DAL.Models.DoctorPatient", b =>
                 {
-                    b.Property<int>("PatientId")
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<int?>("DoctorId")
                         .HasColumnType("int");
 
-                    b.HasKey("PatientId", "DoctorId");
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("id");
 
                     b.HasIndex("DoctorId");
+
+                    b.HasIndex("PatientId");
 
                     b.ToTable("DoctorPatients");
                 });
@@ -283,8 +291,7 @@ namespace ClinicManagementSystem.DAL.Migrations
                     b.HasOne("ClinicManagementSystem.DAL.Models.Doctor", "Doctor")
                         .WithMany("DoctorPatients")
                         .HasForeignKey("DoctorId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("ClinicManagementSystem.DAL.Models.Patient", "Patient")
                         .WithMany("DoctorPatients")
