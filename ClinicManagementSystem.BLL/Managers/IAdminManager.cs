@@ -14,5 +14,6 @@ namespace ClinicManagementSystem.BLL.Managers
         public DoctorReadDto GetDocById (int id);
         public IEnumerable<PendingReadDto> GetAllPendingAppointments();
         public IEnumerable<PendingReadDto> GetAllApprovedAppointments();
+        public IEnumerable<PatientGetDto> GetAllPatients();
     }
 }

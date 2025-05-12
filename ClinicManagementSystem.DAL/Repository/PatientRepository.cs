@@ -26,7 +26,9 @@ namespace ClinicManagementSystem.DAL.Repository
 
         public IQueryable<Patient> GetAll()
         {
-            throw new NotImplementedException();
+            var found = _context.Patients.Include(a=>a.user);
+
+            return found;
         }
 
         public Patient GetPatientById(int id)

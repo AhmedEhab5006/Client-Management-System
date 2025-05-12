@@ -308,5 +308,18 @@ namespace ClinicManagementSystem.API.Controllers
 
             return NotFound("No doctor with that id");
         }
+
+        [HttpGet("GetAllPatients")]
+        public IActionResult GetAllPatients()
+        {
+            var found = _adminManager.GetAllPatients();
+
+            if (found.Count() > 0)
+            {
+                return Ok (found);
+            }
+
+            return NotFound("No patients to show");
+        }
     }
 }

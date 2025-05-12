@@ -14,11 +14,13 @@ namespace ClinicManagementSystem.BLL.Managers
         private IDoctorRepository _doctorRepository;
         private IPasswordHandlerManager _passwordHadnlerManager;
         private IReservationRepository _reservationRepository;
+        private IPatientRepository _patientRepository;
 
-        public AdminManager(IDoctorRepository doctorRepository , IPasswordHandlerManager passwordHandlerManager , IReservationRepository reservationRepository) {
+        public AdminManager(IDoctorRepository doctorRepository , IPasswordHandlerManager passwordHandlerManager , IReservationRepository reservationRepository , IPatientRepository patientRepository) {
             _doctorRepository = doctorRepository;
             _passwordHadnlerManager = passwordHandlerManager;
             _reservationRepository = reservationRepository;
+            _patientRepository = patientRepository;
         }
 
         public IEnumerable<PendingReadDto> GetAllApprovedAppointments()
@@ -37,6 +39,26 @@ namespace ClinicManagementSystem.BLL.Managers
                 }).ToList();
 
                 return found;
+            }
+
+            return null;
+        }
+
+        public IEnumerable<PatientGetDto> GetAllPatients()
+        {
+            var foundModel = _patientRepository.GetAll().ToList();
+
+            if (foundModel != null)
+            {
+                var found = foundModel.Select(a=> new PatientGetDto
+                {
+                    email = a.user.email,
+                    id = a.user.id,
+                    phone = a.user.phoneNumber,
+                    username = a.user.userName
+                }).ToList();
+
+                return (found);
             }
 
             return null;
