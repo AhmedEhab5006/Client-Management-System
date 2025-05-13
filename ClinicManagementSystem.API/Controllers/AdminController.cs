@@ -298,10 +298,10 @@ namespace ClinicManagementSystem.API.Controllers
         [HttpGet("DocReport/{docId}")]
         public IActionResult DoctorReport(int docId)
         {
+
             var bookedReservations = _context.Reservations
-                .Include(r => r.appointment)
-                .Where(r => r.appointment.status == "Booked")
-                .ToList();
+                    .Include(r => r.appointment)
+                    .ToList();
 
             List<DocReportDTO> docReportDTOs = new();
 
@@ -325,14 +325,15 @@ namespace ClinicManagementSystem.API.Controllers
                         patientId = reservation.patientId,
                         PatientUserName = patientUser.userName
                     });
-                }
-                
-                return Ok (docReportDTOs);
 
-            }return NotFound("No reserved appointments for this doctor"); 
+                    return Ok(docReportDTOs);
+                }
+            }
+            return NotFound("No reserved appointments for this doctor");
+        } 
 
             
-        }
+        
 
         [HttpGet("PrintReport/{docId}")]
         public async Task<IActionResult> GenerateReportAsPDF(int docId)
