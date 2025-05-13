@@ -211,6 +211,12 @@ namespace ClinicManagementSystem.API.Controllers
                 }
 
                 _context.Patients.Update(patient);
+
+                var foundAppointment = _context.DoctorAppointments.Where(a => a.appointmentStart == reservation.appointment.appointmentStart)
+                                                                   .FirstOrDefault();
+                foundAppointment.status = "Booked";
+                _context.Update(foundAppointment);
+
                 if (_context.SaveChanges() > 0)
                     return Ok();
                 return BadRequest ("Could not confirm Reservation");
