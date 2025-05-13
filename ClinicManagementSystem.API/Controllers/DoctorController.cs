@@ -50,7 +50,7 @@ namespace ClinicManagementSystem.API.Controllers
         }
 
         [HttpGet("ViewMedicalHistory/{patientId}")]
-        public IActionResult GetFullMedicalHistory([FromQuery] int patientId)
+        public IActionResult GetFullMedicalHistory(int patientId)
         {
             var found = _doctorManager.GetFullMedicalHistory(patientId);
 
