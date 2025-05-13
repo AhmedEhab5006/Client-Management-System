@@ -5,6 +5,7 @@ using ClinicManagementSystem.DAL.Database;
 using ClinicManagementSystem.DAL.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Resources;
 
 namespace ClinicManagementSystem.API.Controllers
@@ -297,33 +298,36 @@ namespace ClinicManagementSystem.API.Controllers
         [HttpGet("DocReport/{docId}")]
         public IActionResult DoctorReport(int docId)
         {
-            var bookedDocAppointments = _context.DoctorAppointments.Where(i => i.doctorId == docId && i.status == "Booked").ToList();
-            if(bookedDocAppointments.Count > 0)
+            var bookedReservations = _context.Reservations
+                .Include(r => r.appointment)
+                .Where(r => r.appointment.status == "Booked")
+                .ToList();
+
+            List<DocReportDTO> docReportDTOs = new();
+
+            foreach (var reservation in bookedReservations)
             {
-                //Constant through all of the doctor's appointments
-                var docName = _context.ApplicationUsers.Where(i => i.id == bookedDocAppointments[0].doctorId).FirstOrDefault().userName;
-                var docMajor = _context.Doctors.Where(i => i.userId == docId).FirstOrDefault().major;
-                List<DocReportDTO> docReportDTO = new();
-                for(int i = 0; i < bookedDocAppointments.Count; i++)
+                var appointment = reservation.appointment;
+                var doctor = _context.Doctors.FirstOrDefault(d => d.userId == appointment.doctorId);
+                var doctorUser = _context.ApplicationUsers.FirstOrDefault(u => u.id == appointment.doctorId);
+                var patientUser = _context.ApplicationUsers.FirstOrDefault(u => u.id == reservation.patientId);
+
+                if (doctor != null && doctorUser != null && patientUser != null)
                 {
-                    var appointment = _context.DoctorAppointments.Where(x => x.Id == bookedDocAppointments[i].Id).FirstOrDefault();
-                    //from this get appointment id / date / start time
-                    var patId = _context.Reservations.Where(x => x.appointmentId == bookedDocAppointments[i].Id).FirstOrDefault().patientId;
-                    var patientName = _context.ApplicationUsers.Where(x => x.id == patId).FirstOrDefault();
-                    docReportDTO.Add(new DocReportDTO
+                    docReportDTOs.Add(new DocReportDTO
                     {
-                        id = docId,
-                        DocUserName = docName,
-                        major = docMajor,
+                        id = doctor.userId,
+                        DocUserName = doctorUser.userName,
+                        major = doctor.major,
                         appointmentId = appointment.Id,
                         date = appointment.date,
                         appointmentStart = appointment.appointmentStart,
-                        patientId = patId,
-                        PatientUserName = patientName.userName
+                        patientId = reservation.patientId,
+                        PatientUserName = patientUser.userName
                     });
                 }
                 
-                return Ok (docReportDTO);
+                return Ok (docReportDTOs);
 
             }return NotFound("No reserved appointments for this doctor"); 
 
