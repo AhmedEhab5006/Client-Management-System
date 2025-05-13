@@ -349,5 +349,18 @@ namespace ClinicManagementSystem.API.Controllers
 
             return NotFound("No patients to show");
         }
+
+        [HttpGet("GetAvailaleAppointments/{docID}")]
+        public IActionResult GetAvailableAppointments(int docID)
+        {
+            var found = _adminManager.GetDoctorAppointment(docID);
+
+            if (found.Count() > 0)
+            {
+                return Ok(found);
+            }
+
+            return NotFound("No appointments for this doctor");
+        }
     }
 }

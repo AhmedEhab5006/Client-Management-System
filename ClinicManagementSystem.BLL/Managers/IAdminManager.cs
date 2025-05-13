@@ -1,4 +1,5 @@
 ﻿using ClinicManagementSystem.BLL.Dto_s.AdminDTO;
+using ClinicManagementSystem.BLL.Dto_s.DocDto;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
 using ClinicManagementSystem.DAL.Models;
 using System;
@@ -16,5 +17,6 @@ namespace ClinicManagementSystem.BLL.Managers
         public IEnumerable<PendingReadDto> GetAllApprovedAppointments();
         public IEnumerable<PatientGetDto> GetAllPatients();
         public IEnumerable<ReservationReadDto> GetSame(int id);
+        public IEnumerable<AppointmentReadDto> GetDoctorAppointment(int doctorId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ClinicManagementSystem.BLL.Dto_s.AdminDTO;
+using ClinicManagementSystem.BLL.Dto_s.DocDto;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
 using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.DAL.Repository;
@@ -16,12 +17,14 @@ namespace ClinicManagementSystem.BLL.Managers
         private IPasswordHandlerManager _passwordHadnlerManager;
         private IReservationRepository _reservationRepository;
         private IPatientRepository _patientRepository;
+        private IAppointmentRepository _appointmentRepository;
 
-        public AdminManager(IDoctorRepository doctorRepository , IPasswordHandlerManager passwordHandlerManager , IReservationRepository reservationRepository , IPatientRepository patientRepository) {
+        public AdminManager(IDoctorRepository doctorRepository , IPasswordHandlerManager passwordHandlerManager , IReservationRepository reservationRepository , IPatientRepository patientRepository , IAppointmentRepository  appointmentRepository) {
             _doctorRepository = doctorRepository;
             _passwordHadnlerManager = passwordHandlerManager;
             _reservationRepository = reservationRepository;
             _patientRepository = patientRepository;
+            _appointmentRepository = appointmentRepository;
         }
 
         public IEnumerable<PendingReadDto> GetAllApprovedAppointments()
@@ -129,5 +132,30 @@ namespace ClinicManagementSystem.BLL.Managers
 
             return null;
         }
+
+        public IEnumerable<AppointmentReadDto> GetDoctorAppointment(int doctorId)
+        {
+            var foundModel = _appointmentRepository.Get(doctorId).Where(a => a.status == "Available").ToList();
+
+
+            if (foundModel != null)
+            {
+                var found = foundModel.Select(a => new AppointmentReadDto
+                {
+                    status = a.status,
+                    appointmentStart = a.appointmentStart,
+                    appointmentEnd = a.appointmentEnd,
+                    date = a.date,
+                    duration = a.duration,
+                    id = a.Id
+                }).ToList();
+
+                return found;
+            }
+
+            return null;
+
+        }
+
     }
 }
