@@ -22,5 +22,9 @@ namespace ClinicManagementSystem.BLL.Managers
         IEnumerable<MedicalHistoryGetDto> GetMyMedicalHistory(int patientId);
         public IEnumerable<DoctorsReadDto> GetAllDoctors();
         public IEnumerable<AppointmentReadDto> GetDoctorAppointment(int doctorId);
+        public string ViewPendingCount(int patientId);
+        public string ViewApprovedCount(int patientId);
+        public string ViewRejectedCount(int patientId);
+
     }
 }

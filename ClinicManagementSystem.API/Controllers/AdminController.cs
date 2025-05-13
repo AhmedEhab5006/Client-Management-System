@@ -189,7 +189,9 @@ namespace ClinicManagementSystem.API.Controllers
         [HttpPut("AdminConfirmAppointment/{reservationId}")]
         public IActionResult ConfirmReservation(int reservationId)
         {
-            var reservation = _context.Reservations.Where(i => i.id == reservationId).FirstOrDefault();
+            var reservation = _context.Reservations.Where(i => i.id == reservationId)
+                                                   .Where(a=>a.status != "Reserved")
+                                                   .FirstOrDefault();
             if (reservation != null)
             {
                 reservation.status = "Reserved";
@@ -198,7 +200,6 @@ namespace ClinicManagementSystem.API.Controllers
                 patient = _context.Patients.Where(a => a.userId == reservation.patientId).FirstOrDefault();
                 var getDoc = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault();
                 getDoc.status = "Booked";
-                //patient.userId = reservation.patientId;
                 doctorPatient.DoctorId = getDoc.doctorId;
                 doctorPatient.PatientId = reservation.patientId;
                 _context.DoctorPatients.Add(doctorPatient);

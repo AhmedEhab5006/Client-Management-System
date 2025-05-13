@@ -163,5 +163,42 @@ namespace ClinicManagementSystem.BLL.Managers
             return null;
 
         }
+
+        public string ViewPendingCount(int patientId)
+        {
+            var found = _patientRepository.GetPatientById(patientId);
+
+            if (found != null)
+            {
+                return found.pendingAppointments.ToString();
+            }
+
+            return null;
+        }
+
+        public string ViewApprovedCount(int patientId)
+        {
+            var found = _patientRepository.GetPatientById(patientId);
+
+            if (found != null)
+            {
+                return found.approvedAppointments.ToString();
+            }
+
+            return null;
+        }
+    
+
+        public string ViewRejectedCount(int patientId)
+        {
+            var found = _patientRepository.GetPatientById(patientId);
+
+            if (found != null)
+            {
+                return found.rejectedAppointments.ToString();
+            }
+
+            return null;
+        }
     }
 }

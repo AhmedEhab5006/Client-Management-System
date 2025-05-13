@@ -4,6 +4,7 @@ using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
+using ClinicManagementSystem.BLL.Helpers;
 
 namespace ClinicManagementSystem.API.Controllers
 {
@@ -13,9 +14,12 @@ namespace ClinicManagementSystem.API.Controllers
     public class PatientController : ControllerBase
     {
         private readonly IPatientManager _patientManager;
-        public PatientController(IPatientManager patientManager)
+        private readonly IGetLoggedData _getLoggedData;
+
+        public PatientController(IPatientManager patientManager , IGetLoggedData getLoggedData)
         {
             _patientManager = patientManager;
+            _getLoggedData = getLoggedData;
         }
         private int GetPatientIdFromToken()
         {
@@ -161,6 +165,48 @@ namespace ClinicManagementSystem.API.Controllers
             }
 
             return NotFound("No appointments for this doctor");
+        }
+
+        [HttpGet("GetMyPendingCount")]
+        public IActionResult PendingCount()
+        {
+            var found = _patientManager.ViewPendingCount(_getLoggedData.GetId());
+            
+            if (found != null)
+            {
+                return Ok(found);
+            }
+
+            return NotFound("No patient with this id");
+
+        }
+
+        [HttpGet("GetMyApprovedCount")]
+        public IActionResult ApprovedCount()
+        {
+            var found = _patientManager.ViewApprovedCount(_getLoggedData.GetId());
+
+            if (found != null)
+            {
+                return Ok(found);
+            }
+
+            return NotFound("No patient with this id");
+
+        }
+
+        [HttpGet("GetMyRejectedCount")]
+        public IActionResult RejectedCount()
+        {
+            var found = _patientManager.ViewRejectedCount(_getLoggedData.GetId());
+
+            if (found != null)
+            {
+                return Ok(found);
+            }
+
+            return NotFound("No patient with this id");
+
         }
     }
 }

@@ -54,5 +54,6 @@ namespace ClinicManagementSystem.DAL.Repository
                 found.pendingAppointments += 1;
             }
         }
+
     }
 }

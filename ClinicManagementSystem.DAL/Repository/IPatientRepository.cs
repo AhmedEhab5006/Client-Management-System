@@ -15,7 +15,7 @@ namespace ClinicManagementSystem.DAL.Repository
         public void AddPatient (Patient patient);
         public Patient GetPatientById (int id);
         public void PendingPlus(int patientId);
-        
+
 
     }
 }
