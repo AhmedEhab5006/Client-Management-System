@@ -160,5 +160,14 @@ namespace ClinicManagementSystem.BLL.Managers
 
         }
 
+        public void EditReservation(ReservationEditDto reservationEditDto)
+        {
+            var foundModel = _reservationRepository.GetById(reservationEditDto.reservationId);
+            if (foundModel != null)
+            {
+                foundModel.appointmentId = reservationEditDto.appointmentId;
+            }
+
+        }
     }
 }

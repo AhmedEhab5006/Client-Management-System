@@ -1,4 +1,5 @@
 ﻿using ClinicManagementSystem.BLL.Dto_s.AdminDTO;
+using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
 using ClinicManagementSystem.BLL.Managers;
 using ClinicManagementSystem.DAL.Database;
 using ClinicManagementSystem.DAL.Models;
@@ -272,10 +273,10 @@ namespace ClinicManagementSystem.API.Controllers
 
         //reschedule a Reservation (Use doctorAppointments Method to get all of the doctor's available appointments)
         [HttpPut("RescheduleReservation/{reservationId}")]
-        public IActionResult ReservationReschedule(int reservationId,[FromBody]int newAppointmentId)
+        public IActionResult ReservationReschedule(int reservationId, [FromQuery] int newAppointmentId)
         {
             var reservation = _context.Reservations.Where(i => i.id == reservationId).FirstOrDefault();
-            if(reservation != null)
+            if (reservation != null)
             {
                 var appointment = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault().status;
                 appointment = "Available";
@@ -285,9 +286,13 @@ namespace ClinicManagementSystem.API.Controllers
                 if (_context.SaveChanges() > 0)
                     return Ok();
                 return BadRequest("No Changes Made");
-            }return NotFound("Reservation not Found!!");
+            }
+            return NotFound("Reservation not Found!!");
         }
 
+
+
+        //public IActionResult EditAppointment ()   
 
 
         //This method returns the booked appointments of a Specific Doctor

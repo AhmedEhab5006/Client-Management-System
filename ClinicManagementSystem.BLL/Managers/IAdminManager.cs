@@ -18,5 +18,6 @@ namespace ClinicManagementSystem.BLL.Managers
         public IEnumerable<PatientGetDto> GetAllPatients();
         public IEnumerable<ReservationReadDto> GetSame(int id);
         public IEnumerable<AppointmentReadDto> GetDoctorAppointment(int doctorId);
+        public void EditReservation(ReservationEditDto reservationEditDto);
     }
 }
