@@ -271,8 +271,8 @@ namespace ClinicManagementSystem.API.Controllers
         }
 
         //reschedule a Reservation (Use doctorAppointments Method to get all of the doctor's available appointments)
-        [HttpPut("RescheduleReservation/{reservationId}")]
-        public IActionResult ReservationReschedule(int reservationId,[FromBody]int newAppointmentId)
+        [HttpPut("RescheduleReservation/{reservationId}/{newAppointmentId}")]
+        public IActionResult ReservationReschedule(int reservationId, int newAppointmentId)
         {
             var reservation = _context.Reservations.Where(i => i.id == reservationId).FirstOrDefault();
             if(reservation != null)
