@@ -269,7 +269,6 @@ namespace ClinicManagementSystem.API.Controllers
             var appointments = _context.DoctorAppointments.Where(i => i.doctorId == docId && i.date == date).ToList();
             return appointments;
         }
-        Hello
 
         //reschedule a Reservation (Use doctorAppointments Method to get all of the doctor's available appointments)
         [HttpPut("RescheduleReservation/{reservationId}/{newAppointmentId}")]
