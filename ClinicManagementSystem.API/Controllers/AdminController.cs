@@ -282,12 +282,18 @@ namespace ClinicManagementSystem.API.Controllers
             if(reservation != null)
             {
                 var appointment = _context.DoctorAppointments.Where(i => i.Id == reservation.appointmentId).FirstOrDefault().status;
+                
                 appointment = "Available";
                 reservation.appointmentId = newAppointmentId;
                 var newAppointment = _context.DoctorAppointments.Where(i => i.Id == newAppointmentId).FirstOrDefault();
-                newAppointment.status = "Booked";
-                if (_context.SaveChanges() > 0)
-                    return Ok();
+                
+                if (newAppointment.status != "Booked")
+                {
+                    newAppointment.status = "Booked";
+                    if (_context.SaveChanges() > 0)
+                        return Ok();
+                }
+               
                 return BadRequest("No Changes Made");
             }return NotFound("Reservation not Found!!");
         }
