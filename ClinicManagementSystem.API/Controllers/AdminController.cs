@@ -290,6 +290,7 @@ namespace ClinicManagementSystem.API.Controllers
                 if (newAppointment.status != "Booked")
                 {
                     newAppointment.status = "Booked";
+                    reservation.status = "Reserved";
                     if (_context.SaveChanges() > 0)
                         return Ok();
                 }
