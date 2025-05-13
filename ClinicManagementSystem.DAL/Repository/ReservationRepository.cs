@@ -69,5 +69,13 @@ namespace ClinicManagementSystem.DAL.Repository
 
             return found;
         }
+
+        public IQueryable<Reservation> GetSimilar(int id)
+        {
+            var found = _context.Reservations.Where(a => a.appointmentId == id)
+                                             .Include(a => a.appointment);           
+            
+            return found;
+        }
     }
 }

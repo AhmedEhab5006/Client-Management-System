@@ -1,5 +1,6 @@
 ﻿using ClinicManagementSystem.BLL.Dto_s.AdminDTO;
 using ClinicManagementSystem.BLL.Dto_s.PatientDto_s;
+using ClinicManagementSystem.DAL.Models;
 using ClinicManagementSystem.DAL.Repository;
 using System;
 using System.Collections.Generic;
@@ -103,6 +104,25 @@ namespace ClinicManagementSystem.BLL.Managers
                     phoneNumber = foundModel.phoneNumber,
                     password = foundPassword,
                 };
+
+                return found;
+            }
+
+            return null;
+        }
+
+        public IEnumerable<ReservationReadDto> GetSame(int id)
+        {
+            var foundModel = _reservationRepository.GetSimilar(id).ToList();
+            if (foundModel != null)
+            {
+                var found = foundModel.Select(a => new ReservationReadDto
+                {
+                    start = a.appointment.appointmentStart,
+                    date = a.appointment.date,
+                    docId = a.appointment.doctorId,
+                    status = a.appointment.status
+                }).ToList();
 
                 return found;
             }

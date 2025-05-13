@@ -192,6 +192,14 @@ namespace ClinicManagementSystem.API.Controllers
             var reservation = _context.Reservations.Where(i => i.id == reservationId)
                                                    .Where(a=>a.status != "Reserved")
                                                    .FirstOrDefault();
+            
+            var same = _adminManager.GetSame(reservation.appointmentId).ToList();
+            if (same.Count > 0 && same.Any(a=>a.status == "Booked"))
+            {
+                return BadRequest("There is a conflict can't make a booking");
+            }
+                         
+            
             if (reservation != null)
             {
                 reservation.status = "Reserved";
@@ -211,12 +219,6 @@ namespace ClinicManagementSystem.API.Controllers
                 }
 
                 _context.Patients.Update(patient);
-
-                var foundAppointment = _context.Reservations.Where(a => a.appointment.appointmentStart == reservation.appointment.appointmentStart)
-                                                                   .FirstOrDefault();
-                foundAppointment.status = "Reserved";
-                _context.Reservations.Update(foundAppointment);
-
                 if (_context.SaveChanges() > 0)
                     return Ok();
                 return BadRequest ("Could not confirm Reservation");

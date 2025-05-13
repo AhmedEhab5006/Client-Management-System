@@ -16,5 +16,6 @@ namespace ClinicManagementSystem.DAL.Repository
         IQueryable<Reservation> GetByPatientId(int patientId);
         public IQueryable<Reservation> GetAllPendingAppointments();
         public IQueryable<Reservation> GetAllApprovedAppointments();
+        public IQueryable<Reservation> GetSimilar(int id);
     }
 }
