@@ -103,7 +103,9 @@ namespace ClinicManagementSystem.BLL.Managers
 
         public IEnumerable<PatientReadDto> GetPatients(int docId)
         {
-            var foundModel = _patientRepository.GetSpecificDoctorPatients(docId).Distinct().ToList();
+            var foundModel = _patientRepository.GetSpecificDoctorPatients(docId).GroupBy(p => p.PatientId)
+                                                                                .Select(g => g.First()) 
+                                                                                .ToList();
 
             if (foundModel.Count() > 0)
             {
