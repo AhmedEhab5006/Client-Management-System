@@ -81,7 +81,7 @@ namespace ClinicManagementSystem.BLL.Managers
                     id = a.id,
                     patientName = a.patient.user.firstName + " " + a.patient.user.lastName,
                     time = a.appointment.appointmentStart,
-                    docId = a.doctorId
+                    docId = a.appointment.doctorId
                 }).ToList();
 
                 return found;
