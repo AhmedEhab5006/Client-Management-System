@@ -299,43 +299,40 @@ namespace ClinicManagementSystem.API.Controllers
         public IActionResult DoctorReport(int docId)
         {
 
-            var bookedReservations = _context.Reservations
-                .Include(r => r.appointment)
+            var allAppointments = _context.DoctorAppointments
+                .Include(a => a.doctor)
                 .ToList();
 
             List<DocReportDTO> docReportDTOs = new();
 
-            foreach (var reservation in bookedReservations)
+            foreach (var appointment in allAppointments)
             {
-                var appointment = reservation.appointment;
+                var reservation = _context.Reservations
+                    .FirstOrDefault(r => r.appointmentId == appointment.Id);
 
-                var doctorUserId = appointment.doctorId;
+                var doctorUser = _context.ApplicationUsers
+                    .FirstOrDefault(u => u.id == appointment.doctorId);
 
-                // Use FirstOrDefault safely
-                var doctor = _context.Doctors.FirstOrDefault(d => d.userId == doctorUserId);
-                var doctorUser = _context.ApplicationUsers.FirstOrDefault(u => u.id == doctorUserId);
-                var patientUser = _context.ApplicationUsers.FirstOrDefault(u => u.id == reservation.patientId);
+                var doctor = _context.Doctors
+                    .FirstOrDefault(d => d.userId == appointment.doctorId);
 
-                if (doctor != null && doctorUser != null && patientUser != null)
+                var patientUser = reservation != null
+                    ? _context.ApplicationUsers.FirstOrDefault(p => p.id == reservation.patientId)
+                    : null;
+
+                docReportDTOs.Add(new DocReportDTO
                 {
-                    docReportDTOs.Add(new DocReportDTO
-                    {
-                        DocUserName = doctorUser.userName,
-                        major = doctor.major,
-                        appointmentId = appointment.Id,
-                        date = appointment.date,
-                        appointmentStart = appointment.appointmentStart,
-                        PatientUserName = patientUser.userName
-                    });
-                }
+                    DocUserName = doctorUser?.userName ?? "N/A",
+                    major = doctor?.major ?? "N/A",
+                    appointmentId = appointment.Id,
+                    date = appointment.date,
+                    appointmentStart = appointment.appointmentStart,
+                    PatientUserName = patientUser?.userName ?? "Available" // if null, mark as available
+                });
             }
 
-            // Now return the full list of results
-            if (docReportDTOs.Count > 0)
-                return Ok(docReportDTOs);
-            else
-                return NotFound("No reserved appointments found.");
-        } 
+            return Ok(docReportDTOs);
+         } 
 
             
         
