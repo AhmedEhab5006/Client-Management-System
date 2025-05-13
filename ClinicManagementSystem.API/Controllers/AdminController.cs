@@ -197,11 +197,16 @@ namespace ClinicManagementSystem.API.Controllers
                                                    .Where(a=>a.status != "Reserved")
                                                    .FirstOrDefault();
             
-            var same = _adminManager.GetSame(reservation.appointmentId).ToList();
-            if (same.Count > 0 && same.Any(a=>a.status == "Booked"))
+            
+            if (reservation != null)
             {
-                return BadRequest("There is a conflict can't make a booking");
+                var same = _adminManager.GetSame(reservation.appointmentId).ToList();
+                if (same.Count > 0 && same.Any(a => a.status == "Booked"))
+                {
+                    return BadRequest("There is a conflict can't make a booking");
+                }
             }
+            
                          
             
             if (reservation != null)
