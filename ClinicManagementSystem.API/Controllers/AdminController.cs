@@ -300,36 +300,42 @@ namespace ClinicManagementSystem.API.Controllers
         {
 
             var bookedReservations = _context.Reservations
-                    .Include(r => r.appointment)
-                    .ToList();
+    .Include(r => r.appointment)
+    .Where(r => r.appointment.status == "Booked")
+    .ToList();
 
             List<DocReportDTO> docReportDTOs = new();
 
             foreach (var reservation in bookedReservations)
             {
                 var appointment = reservation.appointment;
-                var doctor = _context.Doctors.FirstOrDefault(d => d.userId == appointment.doctorId);
-                var doctorUser = _context.ApplicationUsers.FirstOrDefault(u => u.id == appointment.doctorId);
+
+                var doctorUserId = appointment.doctorId;
+
+                // Use FirstOrDefault safely
+                var doctor = _context.Doctors.FirstOrDefault(d => d.userId == doctorUserId);
+                var doctorUser = _context.ApplicationUsers.FirstOrDefault(u => u.id == doctorUserId);
                 var patientUser = _context.ApplicationUsers.FirstOrDefault(u => u.id == reservation.patientId);
 
                 if (doctor != null && doctorUser != null && patientUser != null)
                 {
                     docReportDTOs.Add(new DocReportDTO
                     {
-                        id = doctor.userId,
                         DocUserName = doctorUser.userName,
                         major = doctor.major,
                         appointmentId = appointment.Id,
                         date = appointment.date,
                         appointmentStart = appointment.appointmentStart,
-                        patientId = reservation.patientId,
                         PatientUserName = patientUser.userName
                     });
-
-                    return Ok(docReportDTOs);
                 }
             }
-            return NotFound("No reserved appointments for this doctor");
+
+            // Now return the full list of results
+            if (docReportDTOs.Count > 0)
+                return Ok(docReportDTOs);
+            else
+                return NotFound("No reserved appointments found.");
         } 
 
             
