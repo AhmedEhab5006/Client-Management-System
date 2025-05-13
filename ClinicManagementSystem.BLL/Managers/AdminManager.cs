@@ -80,7 +80,8 @@ namespace ClinicManagementSystem.BLL.Managers
                     doctorName = a.appointment.doctor.user.firstName + " " + a.appointment.doctor.user.lastName,
                     id = a.id,
                     patientName = a.patient.user.firstName + " " + a.patient.user.lastName,
-                    time = a.appointment.appointmentStart
+                    time = a.appointment.appointmentStart,
+                    docId = a.doctorId
                 }).ToList();
 
                 return found;
@@ -147,7 +148,8 @@ namespace ClinicManagementSystem.BLL.Managers
                     appointmentEnd = a.appointmentEnd,
                     date = a.date,
                     duration = a.duration,
-                    id = a.Id
+                    id = a.Id,
+                    docId = a.doctorId
                 }).ToList();
 
                 return found;

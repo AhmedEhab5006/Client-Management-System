@@ -14,6 +14,7 @@ namespace ClinicManagementSystem.BLL.Dto_s.AdminDTO
         public string doctorName { get; set; }
         public TimeOnly time {  get; set; }
         public DateOnly date {  get; set; }
+        public int docId { get; set; }
 
     }
 }
