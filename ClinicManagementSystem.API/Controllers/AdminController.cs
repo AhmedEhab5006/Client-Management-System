@@ -1,4 +1,5 @@
 ﻿using ClinicManagementSystem.BLL.Dto_s.AdminDTO;
+using ClinicManagementSystem.BLL.Helpers;
 using ClinicManagementSystem.BLL.Managers;
 using ClinicManagementSystem.DAL.Database;
 using ClinicManagementSystem.DAL.Models;
@@ -17,12 +18,14 @@ namespace ClinicManagementSystem.API.Controllers
         private readonly ProgramContext _context;
         private readonly IPasswordHandlerManager _passwordHandlerManager;
         private readonly IAdminManager _adminManager;
+        private readonly IGenerateReport _generateReport;
 
-        public AdminController(IConfiguration config , IPasswordHandlerManager passwordHandlerManager , IAdminManager adminManager)
+        public AdminController(IConfiguration config , IPasswordHandlerManager passwordHandlerManager , IAdminManager adminManager , IGenerateReport generateReport)
         {
             _context = new(config);
             _passwordHandlerManager = passwordHandlerManager;
             _adminManager = adminManager;
+            _generateReport = generateReport;
         }
 
 
@@ -319,11 +322,24 @@ namespace ClinicManagementSystem.API.Controllers
                         PatientUserName = patientName.userName
                     });
                 }
+                
                 return Ok (docReportDTO);
+
             }return NotFound("No reserved appointments for this doctor"); 
 
             
         }
+
+        [HttpGet("PrintReport/{docId}")]
+        public async Task<IActionResult> GenerateReportAsPDF(int docId)
+        {
+            var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            string apiUrl = $"https://localhost:7238/Admin/DocReport/{docId}";
+            var pdfBytes = await _generateReport.ExportApiResponseToPdfAsync(apiUrl , token);
+            return File(pdfBytes, "application/pdf", $"DoctorReport_{docId}.pdf");
+        }
+
+
         [HttpGet("GetDocById/{id}")]
         public IActionResult GetDocById (int id)
         {

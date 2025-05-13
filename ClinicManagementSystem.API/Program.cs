@@ -39,7 +39,9 @@ internal class Program
         builder.Services.AddScoped<IChatRoomRepository, ChatRoomRepository>();
         builder.Services.AddScoped<IDoctorRepository , DoctorRepository>();
         builder.Services.AddScoped<IAdminManager, AdminManager>();
+        builder.Services.AddScoped<IGenerateReport, GenerateReport>();
         builder.Services.AddHttpContextAccessor();
+        builder.Services.AddHttpClient();
         builder.Services.AddSignalR();
         builder.Services.AddSingleton<SharedDb>();
 
