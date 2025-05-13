@@ -300,9 +300,8 @@ namespace ClinicManagementSystem.API.Controllers
         {
 
             var bookedReservations = _context.Reservations
-    .Include(r => r.appointment)
-    .Where(r => r.appointment.status == "Booked")
-    .ToList();
+                .Include(r => r.appointment)
+                .ToList();
 
             List<DocReportDTO> docReportDTOs = new();
 
