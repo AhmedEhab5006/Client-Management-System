@@ -12,5 +12,6 @@ namespace ClinicManagementSystem.DAL.Repository
         public Task<List<string>> GetAllRoomNamesAsync();
         public Task<bool> RoomExistsAsync(string roomName);
         public void AddRoom(ChatRoom room);
+        public IEnumerable<string> GetAllRooms();
     }
 }

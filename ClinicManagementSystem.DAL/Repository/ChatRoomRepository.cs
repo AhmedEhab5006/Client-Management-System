@@ -28,6 +28,12 @@ namespace ClinicManagementSystem.DAL.Repository
             return await _context.ChatRooms.Select(r => r.Name).ToListAsync();
         }
 
+        public IEnumerable<string> GetAllRooms()
+        {
+            var found = _context.ChatRooms.Select(a=>a.Name).ToList();
+            return found;
+        }
+
         public async Task<bool> RoomExistsAsync(string roomName)
         {
             return await _context.ChatRooms.AnyAsync(r => r.Name == roomName);
